@@ -8,7 +8,7 @@
 Platform use installed XC16 compiler<br>
 For now I use **1.24**
 
-1. Install C++ Compiler ( need for cpp projects and/or Arduino )<br>
+1. Install C++ Compiler ( need for CPP projects and Arduino )<br>
 https://github.com/fabio-d/xc16plusplus
 
 2. Install platform:<br>
