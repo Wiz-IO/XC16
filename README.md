@@ -28,7 +28,7 @@ MPLAB IPE (PICKIT 3, 4 etc ) - load HEX, Program...
 [env:WizIO-PIC24FJ256GB206]
 platform = XC16
 board = WizIO-PIC24FJ256GB206
-framework = Arduino
+framework = Arduino ; or Baremetal
 
 ;custom_xc16 C:/Program Files (x86)/Microchip/xc16/v1.2x : select custom version
 
