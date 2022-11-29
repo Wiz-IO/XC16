@@ -15,8 +15,9 @@ https://github.com/fabio-d/xc16plusplus
 PIO Home > Platforms > Advanced Installation: paste this git url
 
 ## PROBLEMS<br>
+In general C projects should work without problems<br>
 Should work on Linux & Mac too... no idea...  me: Windows<br>
-The compiler has some quirks... I'm experimenting :)<br>
+The C++ compiler has some quirks... I'm experimenting...<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip/board<br>
 
