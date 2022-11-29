@@ -32,6 +32,8 @@ framework = Arduino
 
 ;custom_xc16 C:/Program Files (x86)/Microchip/xc16/v1.2x : select custom version
 
+;custom_heap = 8129 ; is default
+
 monitor_port = COM26
 monitor_speed = 115200
 ```
