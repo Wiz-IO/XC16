@@ -1,7 +1,7 @@
 # Microchip XC16 PlatformIO
 
 ## FOR NOW IS JUST EXPERIMENT !?! <br> 
-_( and there may be many errors )_
+**and there may be many errors**
 
 
 **COMPILER**
@@ -18,6 +18,9 @@ PIO Home > Platforms > Advanced Installation: paste this git url
 the compiler has some quirks... I'm experimenting :)<br>
 Arduino API is 32 bits, XC16 is 16 bits (int)<br>
 I have PIC24FJ256GB206, so, the experiments are with this chip<br>
+
+**UPLOADER**
+MPLAB IPE (PICKIT 3, 4 etc ) - load HEX, Program...
 
 **INI**
 ```
