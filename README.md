@@ -62,7 +62,7 @@ void blink()
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(115200); // pins 11 & 12
     Serial.println("PIC24F Hello World 2022 Georgi Angelov");
     pinMode(LED, OUTPUT);
 }
