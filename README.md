@@ -12,7 +12,7 @@ For now I use **1.24**
 https://github.com/fabio-d/xc16plusplus <br>
 https://github.com/fabio-d/xc16plusplus/releases <br>
 
-2. Install platform:<br>
+2. Install Platform:<br>
 PIO Home > Platforms > Advanced Installation: paste this git url
 
 ## PROBLEMS<br>
