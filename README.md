@@ -3,6 +3,7 @@
 ## FOR NOW IS JUST EXPERIMENT !?! <br> 
 **and there may be many errors...**
 
+Framework source: https://github.com/Wiz-IO/framework-XC16
 
 ## COMPILER<br>
 Platform use installed XC16 compiler<br>
