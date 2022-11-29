@@ -20,6 +20,7 @@ Should work on Linux & Mac too... no idea...  me: Windows<br>
 The C++ compiler has some quirks... I'm experimenting...<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip/[board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
+Support: Basic Arduino API, some pins and Serial ( U1 )<br>
 
 ## UPLOADER<br>
 MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program...
