@@ -1,12 +1,12 @@
 # Microchip XC16 PlatformIO
 
 ## FOR NOW IS JUST EXPERIMENT !?! <br> 
-**and there may be many errors**
+**and there may be many errors...**
 
 
 ## COMPILER<br>
 Platform use installed XC16 compiler<br>
-for now I use **1.24**
+For now I use **1.24**
 
 1. Install C++ Compiler ( need for cpp projects and/or Arduino )<br>
 https://github.com/fabio-d/xc16plusplus
@@ -15,6 +15,7 @@ https://github.com/fabio-d/xc16plusplus
 PIO Home > Platforms > Advanced Installation: paste this git url
 
 ## PROBLEMS<br>
+Should work on Linux & Mac too... no idea...  me: Windows
 The compiler has some quirks... I'm experimenting :)<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits (int)<br>
 I have PIC24FJ256GB206, so, the experiments are with this chip/board<br>
@@ -23,11 +24,13 @@ I have PIC24FJ256GB206, so, the experiments are with this chip/board<br>
 MPLAB IPE (PICKIT 3, 4 etc ) - load HEX, Program...
 
 ## INI
-```
+```ini
 [env:WizIO-PIC24FJ256GB206]
 platform = XC16
 board = WizIO-PIC24FJ256GB206
 framework = Arduino
+
+;custom_xc16 C:/Program Files (x86)/Microchip/xc16/v1.2x : select custom version
 
 monitor_port = COM26
 monitor_speed = 115200
