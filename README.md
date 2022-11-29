@@ -22,7 +22,7 @@ The C++ compiler has some quirks... I'm experimenting...<br>
 I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip/[board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
 
 ## UPLOADER<br>
-MPLAB IPE ( PICKIT 3, 4 etc ) - load HEX, Program...
+MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program...
 
 ## INI
 ```ini
