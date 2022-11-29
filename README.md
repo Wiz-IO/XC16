@@ -9,7 +9,8 @@ Platform use installed XC16 compiler<br>
 For now I use **1.24**
 
 1. Install C++ Compiler ( need for CPP projects and Arduino )<br>
-https://github.com/fabio-d/xc16plusplus
+https://github.com/fabio-d/xc16plusplus <br>
+https://github.com/fabio-d/xc16plusplus/releases <br>
 
 2. Install platform:<br>
 PIO Home > Platforms > Advanced Installation: paste this git url
