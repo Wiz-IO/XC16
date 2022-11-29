@@ -18,10 +18,10 @@ PIO Home > Platforms > Advanced Installation: paste this git url
 Should work on Linux & Mac too... no idea...  me: Windows<br>
 The compiler has some quirks... I'm experimenting :)<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
-I have PIC24FJ256GB206 ( must work with ...210 too ), so, the experiments are with this chip/board<br>
+I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip/board<br>
 
 ## UPLOADER<br>
-MPLAB IPE (PICKIT 3, 4 etc ) - load HEX, Program...
+MPLAB IPE ( PICKIT 3, 4 etc ) - load HEX, Program...
 
 ## INI
 ```ini
@@ -30,7 +30,7 @@ platform = XC16
 board = WizIO-PIC24FJ256GB206
 framework = Arduino ; or Baremetal
 
-;custom_xc16 C:/Program Files (x86)/Microchip/xc16/v1.2x : select custom version
+;custom_xc16 C:/Program Files (x86)/Microchip/xc16/v1.xx : select custom version
 
 ;custom_heap = 8129 ; is default
 
