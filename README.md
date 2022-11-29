@@ -4,7 +4,7 @@
 **and there may be many errors**
 
 
-**COMPILER**<br>
+## COMPILER<br>
 Platform use installed XC16 compiler<br>
 for now I use **1.24**
 
@@ -14,15 +14,15 @@ https://github.com/fabio-d/xc16plusplus
 2. Install platform:<br>
 PIO Home > Platforms > Advanced Installation: paste this git url
 
-**PROBLEMS**<br>
-the compiler has some quirks... I'm experimenting :)<br>
-Arduino API is 32 bits, XC16 is 16 bits (int)<br>
-I have PIC24FJ256GB206, so, the experiments are with this chip<br>
+## PROBLEMS<br>
+The compiler has some quirks... I'm experimenting :)<br>
+**ATTENTION** Arduino API is 32 bits, XC16 is 16 bits (int)<br>
+I have PIC24FJ256GB206, so, the experiments are with this chip/board<br>
 
-**UPLOADER**<br>
+## UPLOADER<br>
 MPLAB IPE (PICKIT 3, 4 etc ) - load HEX, Program...
 
-**INI**
+## INI
 ```
 [env:WizIO-PIC24FJ256GB206]
 platform = XC16
@@ -33,7 +33,7 @@ monitor_port = COM26
 monitor_speed = 115200
 ```
 
-**Arduino Example**
+## Arduino Example
 ```cpp
 #include <Arduino.h>
 
