@@ -34,7 +34,7 @@ platform = XC16
 board = WizIO-PIC24FJ256GB206
 framework = Arduino ; or Baremetal
 
-;custom_xc16 = C:/Program Files (x86)/Microchip/xc16/v1.xx ; select custom version
+;custom_xc16 = C:/Program Files (x86)/Microchip/xc16/v1.xx ; select custom version, default 1.24
 
 ;custom_heap = 8129 ; is default
 
