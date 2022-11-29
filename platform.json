@@ -1,0 +1,35 @@
+{
+  "name"        : "XC16",
+  "title"       : "PlatformIO - PIC24",
+  "description" : "Development Platform for Microchip PIC24",
+  "homepage"    : "https://www.",
+  "license"     : "Apache-2.0",
+  "engines"     : { "platformio": "^5" },
+  "repository"  : {
+    "type" : "git",
+    "url"  : "https://github.com/"
+  },
+  "version": "1.0.0",
+  "packageRepositories" : [ "http://dl.platformio.org/packages/manifest.json" ],
+  "frameworks": {
+      "Baremetal"  : {
+        "package"       : "framework-XC16",
+        "script"        : "builder/frameworks/build-baremetal.py",
+        "description"   : "description",
+        "title"         : "title"
+      },    
+      "Arduino": {
+        "package"       : "framework-XC16",
+        "script"        : "builder/frameworks/build-arduino.py",
+        "description"   : "description",
+        "title"         : "title"
+      }
+  },
+  "packages": {
+    "framework-XC16": {
+        "type"          : "framework",
+        "version"       : "1.0.0"
+    }
+
+  }
+}
