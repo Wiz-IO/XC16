@@ -1,7 +1,71 @@
 # Microchip XC16 PlatformIO
 
 ## FOR NOW IS JUST EXPERIMENT !?! <br> 
-and there may be many errors
+_( and there may be many errors )_
 
+
+**COMPILER**
 Platform use installed XC16 compiler<br>
-1. Install C++ Compiler<br>
+for now I use **1.24**
+
+1. Install C++ Compiler ( need for cpp projects and/or Arduino )<br>
+https://github.com/fabio-d/xc16plusplus
+
+2. Install platform:<br>
+PIO Home > Platforms > Advanced Installation: paste this git url
+
+**PROBLEMS**
+the compiler has some quirks... I'm experimenting :)<br>
+Arduino API is 32 bits, XC16 is 16 bits (int)<br>
+I have PIC24FJ256GB206, so, the experiments are with this chip<br>
+
+**INI**
+```
+[env:WizIO-PIC24FJ256GB206]
+platform = XC16
+board = WizIO-PIC24FJ256GB206
+framework = Arduino
+
+monitor_port = COM26
+monitor_speed = 115200
+```
+
+**Arduino Example**
+```cpp
+#include <Arduino.h>
+
+void blink()
+{
+    static unsigned int i = 0;
+    static uint32_t begin = millis();
+    if (millis() - begin > 200)
+    {
+        begin = millis();
+        digitalToggle(LED);
+    }
+    if (++i > 60000)
+    {
+        i = 0;
+        Serial.print("MILLIS: ");
+        Serial.println(millis());
+    }
+}
+
+void setup()
+{
+    Serial.begin(115200);
+    Serial.println("PIC24F Hello World 2022 Georgi Angelov");
+    pinMode(LED, OUTPUT);
+}
+
+void loop()
+{
+    blink();
+    if (Serial.available() > 0)
+    {
+        Serial.print("CHAR: ");
+        Serial.write(Serial.read());
+        Serial.println();
+    }
+}
+```
