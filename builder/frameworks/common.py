@@ -1,8 +1,8 @@
 # Copyright 2022 (c) 2022 WizIO ( Georgi Angelov )
 
-from os.path import join, dirname, exists
-from SCons.Script import Builder, COMMAND_LINE_TARGETS
-from wiz import INFO,LOG,ERROR,FRAMEWORK_NAME
+from os.path import join, dirname
+from SCons.Script import Builder
+from wiz import INFO, FRAMEWORK_NAME
 
 def dev_get_value(env, name, default):
     return env.GetProjectOption('custom_%s' % name, # ini user config  
@@ -15,6 +15,7 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         PROGNAME = env.GetProjectOption('custom_name', application_name) # INIDOC 
     )
 
+    INFO('XC16      : %s' % env.xc16_ver)
     env.core = dev_get_value(env, 'core', 'PIC24F') 
     INFO('CORE      : %s' % env.core )
     env.chip = dev_get_value(env, 'mcu', '24FJ256GB206') 
@@ -34,11 +35,10 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
             join(env.xc16_dir, 'include'),
             join(env.xc16_dir, 'support', 'generic', 'h'),
             join(env.xc16_dir, 'support', env.core, 'h'),
-            join(env.xc16_dir, 'support', 'peripheral_24F' if '24F' in env.core else 'peripheral_30F_24H_33F'),
         ],
         CFLAGS = [],
         CCFLAGS = [
-            '-O0', # !!!
+            #'-O0', # !!! FREE COMPILER
             '-mcpu=' + env.chip,
             '-mno-eds-warn',
             '-mlarge-code', 
@@ -58,8 +58,8 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         CXXFLAGS = [
             '-fno-rtti',
             '-fno-exceptions',
-            '-fno-use-cxa-atexit',          # __cxa_atexit, __dso_handle
-            "-fno-threadsafe-statics",      # __cxa_guard_acquire, __cxa_guard_release            
+            '-fno-use-cxa-atexit',      # __cxa_atexit, __dso_handle
+            "-fno-threadsafe-statics",  # __cxa_guard_acquire, __cxa_guard_release            
             '-fno-non-call-exceptions',
         ],
         LIBSOURCE_DIRS = [ 
@@ -72,16 +72,13 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         ],
         LIBS = [ 'm', 'c', 'pic30' ], 
         LINKFLAGS = [ 
-            #'--handles',
-            #'--data-init',
-            '--heap='+env.GetProjectOption('custom_heap', '8129'),
-            #'--stack=16',             
+            '--heap='+env.GetProjectOption('custom_heap', '8129'),            
             '--local-stack', 
             '-p' + env.chip, 
             '--script', 
             join(env.xc16_dir, 'support', env.core, 'gld', 'p' + env.chip + '.gld'), 
             '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')),
-            #'--gc-sections', # !!!
+            #'--gc-sections', # !!! PROBLEM
             #'--report-mem',
         ],
 
@@ -95,5 +92,5 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
 
     env.AddPostAction(
         '$BUILD_DIR/${PROGNAME}.elf',
-        env.VerboseAction(' '.join([ '$OBJCOPY', '-d', '$SOURCES', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
+        env.VerboseAction(' '.join([ '$OBJCOPY', '-S', '$SOURCES', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
     )

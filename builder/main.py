@@ -1,6 +1,5 @@
 # Copyright 2022 (c) 2022 WizIO ( Georgi Angelov )
 
-import time
 from os.path import join
 from SCons.Script import AlwaysBuild, DefaultEnvironment, Default
 from frameworks.wiz import ERROR
@@ -9,12 +8,13 @@ env = DefaultEnvironment()
 
 # Workaround, must be here !!!
 env.GetCompilerType() 
-env.Prepend(_LIBFLAGS="--start-group ")
-env.Append(_LIBFLAGS=" --end-group")
+env.Prepend(_LIBFLAGS='--start-group ')
+env.Append(_LIBFLAGS=' --end-group')
 
-env.xc16_dir = env.GetProjectOption('custom_xc16', 'C:/Program Files (x86)/Microchip/xc16/v1.24')
-env['ENV']['PATH'] += ';' + join(env.xc16_dir, 'bin')
+env.xc16_dir = env.GetProjectOption('custom_xc16', 'C:\\Program Files\\Microchip\\xc16\\v1.50')
+env['ENV']['PATH'] = '' + join(env.xc16_dir, 'bin')
 
+env.xc16_ver = 1.50
 x = env.xc16_dir.replace('/','').replace('\\','').split('xc16')
 env.xc16_ver = float(x[1].replace('v',''))
 
@@ -26,6 +26,7 @@ env.Replace(
     CC      = 'xc16-gcc',
     CXX     = 'xc16-g++',
     LINK    = 'xc16-ld',   
+    RANLIB  = 'xc16-ranlib',
     OBJCOPY = 'xc16-objdump', 
     HEX     = 'xc16-bin2hex',
     PROGSUFFIX='.elf',   
