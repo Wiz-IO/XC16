@@ -7,7 +7,7 @@ Framework source: https://github.com/Wiz-IO/framework-XC16
 
 ## COMPILER<br>
 Platform use installed XC16 compiler<br>
-For now I use **1.50**
+For now I use **1.50** ( not tested with a larger version )
 
 1. Install C++ Compiler ( need for CPP projects and Arduino )<br>
 https://github.com/fabio-d/xc16plusplus <br>
