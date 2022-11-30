@@ -7,7 +7,7 @@ Framework source: https://github.com/Wiz-IO/framework-XC16
 
 ## COMPILER<br>
 Platform use installed XC16 compiler<br>
-For now I use **1.24**
+For now I use **1.50**
 
 1. Install C++ Compiler ( need for CPP projects and Arduino )<br>
 https://github.com/fabio-d/xc16plusplus <br>
@@ -35,7 +35,7 @@ platform = XC16
 board = WizIO-PIC24FJ256GB206
 framework = Arduino ; or Baremetal
 
-;custom_xc16 = C:/Program Files (x86)/Microchip/xc16/v1.xx ; select custom version, default 1.24
+;custom_xc16 = C:\Program Files\Microchip\xc16\v1.50 ; select custom version, default is 1.50
 
 ;custom_heap = 8129 ; is default
 
