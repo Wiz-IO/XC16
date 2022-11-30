@@ -13,7 +13,7 @@ variant = env.BoardConfig().get('build.variant')
 def init_Template(env):
    dir = join( env.subst('$PROJECT_DIR'), 'src' )
    if not listdir( dir ):
-        copyfile( join(env.platform_dir, 'arduino', 'variants', variant, 'fuse'), join(dir, 'fuses.c') )
+        copyfile( join(env.platform_dir, 'arduino', 'variants', variant, 'fuses'), join(dir, 'fuses.c') )
         open( join(dir, 'main.cpp'), 'w').write('''// WizIO 2022 Georgi Angelov
 #include <Arduino.h>
 
