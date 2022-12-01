@@ -7,7 +7,7 @@
   "engines"     : { "platformio": "^5" },
   "repository"  : {
     "type" : "git",
-    "url"  : "https://github.com/"
+    "url"  : "https://github.com/Wiz-IO/XC16"
   },
   "version": "1.0.0",
   "packageRepositories" : [ "http://dl.platformio.org/packages/manifest.json" ],
@@ -15,14 +15,14 @@
       "Baremetal"  : {
         "package"       : "framework-XC16",
         "script"        : "builder/frameworks/build-baremetal.py",
-        "description"   : "description",
-        "title"         : "title"
+        "description"   : "Baremetal Microchip XC16",
+        "title"         : "Baremetal Microchip XC16"
       },    
       "Arduino": {
         "package"       : "framework-XC16",
         "script"        : "builder/frameworks/build-arduino.py",
-        "description"   : "description",
-        "title"         : "title"
+        "description"   : "Arduino Microchip XC16",
+        "title"         : "Arduino Microchip XC16"
       }
   },
   "packages": {
