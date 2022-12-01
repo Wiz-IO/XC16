@@ -2,7 +2,7 @@
   "name"        : "XC16",
   "title"       : "PlatformIO - PIC24",
   "description" : "Development Platform for Microchip PIC24",
-  "homepage"    : "https://www.",
+  "homepage"    : "https://github.com/Wiz-IO",
   "license"     : "Apache-2.0",
   "engines"     : { "platformio": "^5" },
   "repository"  : {
