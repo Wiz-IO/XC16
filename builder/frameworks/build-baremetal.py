@@ -3,15 +3,12 @@
 from os import listdir
 from os.path import join
 from SCons.Script import DefaultEnvironment
-from common import dev_init_compiler
-
-env = DefaultEnvironment()
+from common import dev_init_compiler, dev_ini_add
 
 def init_Template(env):
    dir = join( env.subst('$PROJECT_DIR'), 'src' )
    if not listdir( dir ):
-      open( join(dir, 'main.c'), 'w').write('''// WizIO 2022 Georgi Angelov
-#include <xc.h>
+        open( join(dir, 'main.c'), 'w').write('''#include <xc.h>
 #include <libpic30.h>      
 
 int main(void)
@@ -25,7 +22,14 @@ int main(void)
     }
 }
 ''')
+        dev_ini_add(env, '''
+;custom_xc16 = C:/Program Files/Microchip/xc16/v1.2x
+;custom_heap = 8192        
+;monitor_port = COM33
+;monitor_speed = 115200
+''' )
 
+env = DefaultEnvironment()
 dev_init_compiler(env)
 init_Template(env)
 
@@ -33,5 +37,3 @@ env.Append(
     CPPPATH = [],
     CXXFLAGS  =  [ '-std=c++0x', ],
 )
-
-# TODO

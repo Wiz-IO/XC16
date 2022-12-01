@@ -4,18 +4,13 @@ from os import listdir
 from os.path import join
 from shutil import copyfile
 from SCons.Script import DefaultEnvironment
-from common import dev_init_compiler
-
-env = DefaultEnvironment()
-core    = env.BoardConfig().get('build.core')
-variant = env.BoardConfig().get('build.variant')
+from common import dev_init_compiler, dev_ini_add
 
 def init_Template(env):
    dir = join( env.subst('$PROJECT_DIR'), 'src' )
    if not listdir( dir ):
-        copyfile( join(env.platform_dir, 'arduino', 'variants', variant, 'fuses'), join(dir, 'fuses.c') )
-        open( join(dir, 'main.cpp'), 'w').write('''// WizIO 2022 Georgi Angelov
-#include <Arduino.h>
+        copyfile( join(env.framework_dir, 'arduino', 'variants', variant, 'fuses'), join(dir, 'fuses.c') )
+        open( join(dir, 'main.cpp'), 'w').write('''#include <Arduino.h>
 
 void setup()
 {
@@ -30,12 +25,18 @@ void loop()
     delay(100);
 } 
 ''')   
-    
+        dev_ini_add(env, '''
+;custom_xc16 = C:/Program Files/Microchip/xc16/v1.2x
+;custom_heap = 8192        
+;monitor_port = COM33
+;monitor_speed = 115200
+''' )
 
+env = DefaultEnvironment()
+core = env.BoardConfig().get('build.core')
+variant = env.BoardConfig().get('build.variant')
 dev_init_compiler(env)
 init_Template(env)
-
-
 
 env.Append(
     CPPDEFINES = [ 'ARDUINO=200' ],    
@@ -56,10 +57,10 @@ env.BuildSources(
 
 env.BuildSources( 
     join('$BUILD_DIR', 'arduino', 'core'),
-    join(env.framework_dir, 'arduino', 'cores', env.BoardConfig().get('build.core')), 
+    join(env.framework_dir, 'arduino', 'cores', core), 
 )  
 
 env.BuildSources( 
     join('$BUILD_DIR', 'arduino', 'variant'),
-    join(env.framework_dir, 'arduino', 'variants', env.BoardConfig().get('build.variant')), 
+    join(env.framework_dir, 'arduino', 'variants', variant), 
 ) 

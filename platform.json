@@ -28,8 +28,7 @@
   "packages": {
     "framework-XC16": {
         "type"          : "framework",
-        "Xversion"      : "1.0.0",
-        "version"       : "https://github.com/Wiz-IO/framework-XC16"
+        "version"       : "1.0.0"
     }
 
   }

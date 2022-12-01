@@ -4,6 +4,11 @@ from os.path import join, dirname
 from SCons.Script import Builder
 from wiz import INFO, FRAMEWORK_NAME
 
+def dev_ini_add(env, txt):
+    f = open( join( env.subst('$PROJECT_DIR'), 'platformio.ini' ), 'a+' )
+    f.write(txt) 
+    f.close()
+
 def dev_get_value(env, name, default):
     return env.GetProjectOption('custom_%s' % name, # ini user config  
            env.BoardConfig().get('build.%s' % name, default) ) # default from board
