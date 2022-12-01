@@ -9,12 +9,14 @@ Framework source: https://github.com/Wiz-IO/framework-XC16
 Platform use installed XC16 compiler<br>
 For now I use **1.50** ( Tested with 1.24 ... NOT tested with a larger version. )
 
-1. Install C++ Compiler ( need for CPP projects and Arduino )<br>
+1. Install XC16 **v1.50** from the Microchip website
+
+2. Install C++ Compiler ( need for CPP projects and Arduino )<br>
 https://github.com/fabio-d/xc16plusplus <br>
 https://github.com/fabio-d/xc16plusplus/releases <br>
 
-2. Install Platform:<br>
-PIO Home > Platforms > Advanced Installation: paste this git url
+3. Install Platform:<br>
+PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
 
 ## PROBLEMS<br>
 In general C projects should work without problems<br>
@@ -83,3 +85,9 @@ void loop()
     }
 }
 ```
+
+![gif](https://raw.githubusercontent.com/Wiz-IO/LIB/master/images/xc16.gif)
+
+<hr>
+>If you want to help / support:   
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ESUP9LCZMZTD6)
