@@ -3,6 +3,8 @@
 ## FOR NOW IS JUST EXPERIMENT !?! <br> 
 **and there may be many errors...**
 
+![pic](https://raw.githubusercontent.com/Wiz-IO/LIB/master/images/arduino_pic24f.jpg)
+
 Framework source: https://github.com/Wiz-IO/framework-XC16
 
 ## COMPILER<br>
