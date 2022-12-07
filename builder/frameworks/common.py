@@ -89,7 +89,7 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
 
         BUILDERS = dict(
             ELF2HEX = Builder(
-                action = env.VerboseAction(' '.join([ '$HEX', '$SOURCES',]), 'Creating HEX $TARGET'),
+                action = env.VerboseAction(' '.join([ '$ELF_HEX', '$SOURCES', '-a']), 'Creating HEX $TARGET'),
                 suffix = '.hex'
             )           
         ),        
@@ -97,5 +97,5 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
 
     env.AddPostAction(
         '$BUILD_DIR/${PROGNAME}.elf',
-        env.VerboseAction(' '.join([ '$OBJCOPY', '-S', '$SOURCES', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
+        env.VerboseAction(' '.join([ '$OBJCOPY', '-omf=elf', '-S', '$BUILD_DIR/${PROGNAME}.elf', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
     )
