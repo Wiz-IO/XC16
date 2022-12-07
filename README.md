@@ -31,7 +31,8 @@ I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are 
 Support: Basic Arduino API, some pins, Serial, Wire, SPI...<br>
 
 ## UPLOADER<br>
-MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program...
+MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program<br>
+_I can't find a better solution for now..._
 
 ## INI
 ```ini
