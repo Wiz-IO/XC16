@@ -9,7 +9,7 @@ Framework source: https://github.com/Wiz-IO/framework-XC16
 
 ## COMPILER<br>
 Platform use installed XC16 compiler<br>
-For now I use **1.50** ( Tested with 1.24 ... NOT tested with a larger version. )
+For now I use **1.50** ( NOT tested with a larger version. )
 
 1. Install XC16 **v1.50** from the Microchip website
 
