@@ -27,8 +27,13 @@ Should work with PIC24H & dsPIC - TODO !!!<br>
 The C++ compiler has some quirks... I'm experimenting...<br>
 Linker **--gc-sections** makes a problem, no idea why <br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
-I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip / [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br> Recommended chips with **32k** RAM<br>
+Recommended chips with **32k** RAM<br>
 Support: Basic Arduino API, some pins, Serial, Wire, SPI...<br>
+I have PIC24FJ256GB206 ( must work with ...GB210 too ), so, the experiments are with this chip / [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
+Change chip from **ini**:
+```ini
+custom_mcu = 24FJ256GB210 ; other for tests
+```
 
 ## UPLOADER<br>
 MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program<br>
