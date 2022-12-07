@@ -1,8 +1,21 @@
 # Copyright 2022 (c) 2022 WizIO ( Georgi Angelov )
 
 from os.path import join, dirname
+from shutil import copyfile
 from SCons.Script import Builder
 from wiz import INFO, FRAMEWORK_NAME
+
+def dev_patch_linker(env):
+    dir = join( env.subst('$PROJECT_DIR'), 'src' )
+    copyfile(
+        join(env.xc16_dir, 'support', env.core, 'gld', 'p' + env.chip + '.gld'),
+        join(dir, 'p' + env.chip + '.gld')
+    )
+    f = open(join(dir, 'p' + env.chip + '.gld'), 'r')
+    txt = f.read()
+    f.close()
+    txt = txt.replace('*(.user_init);', 'KEEP( *(.user_init) ); /* WIzIO: --gc-sections workaround */')
+    open(join(dir, 'p' + env.chip + '.gld'), 'w').write(txt)
 
 def dev_ini_add(env, txt):
     f = open( join( env.subst('$PROJECT_DIR'), 'platformio.ini' ), 'a+' )
@@ -21,9 +34,9 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
     )
 
     INFO('XC16      : %s' % env.xc16_ver)
-    env.core = dev_get_value(env, 'core', 'PIC24F') 
+    env.core = dev_get_value(env, 'core', 'PIC24F') # INIDOC
     INFO('CORE      : %s' % env.core )
-    env.chip = dev_get_value(env, 'mcu', '24FJ256GB206') 
+    env.chip = dev_get_value(env, 'mcu', '24FJ256GB206') # INIDOC
     INFO('CHIP      : %s' % env.chip )
 
     env.Append(
@@ -31,7 +44,7 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         CPPDEFINES = [
            '__bool_true_and_false_are_defined', 
            '__PIC' + env.chip + '__',
-           'FCY=' + dev_get_value(env, 'f_cpu', '16000000L'), # FCY = FOSC / 2
+           'FCY=' + dev_get_value(env, 'f_cpu', '16000000L'), # INIDOC, FCY = FOSC / 2
         ],
         CPPPATH = [
             join('$PROJECT_DIR', 'src'),
@@ -43,7 +56,7 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         ],
         CFLAGS = [],
         CCFLAGS = [
-            #'-O0', # !!! FREE COMPILER
+            #'-O0', # !!! LICENSED COMPILER
             '-mcpu=' + env.chip,
             '-mno-eds-warn',
             '-mlarge-code', 
@@ -81,15 +94,14 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
             '--local-stack', 
             '-p' + env.chip, 
             '--script', 
-            join(env.xc16_dir, 'support', env.core, 'gld', 'p' + env.chip + '.gld'), 
+            join('src', 'p' + env.chip + '.gld'),            
             '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')),
-            #'--gc-sections', # !!! PROBLEM
-            #'--report-mem',
+            '--gc-sections',
         ],
 
         BUILDERS = dict(
             ELF2HEX = Builder(
-                action = env.VerboseAction(' '.join([ '$ELF_HEX', '$SOURCES', '-a']), 'Creating HEX $TARGET'),
+                action = env.VerboseAction(' '.join([ '$ELFHEX', '$SOURCES', '-a']), 'Creating HEX $TARGET'),
                 suffix = '.hex'
             )           
         ),        

@@ -3,11 +3,12 @@
 from os import listdir
 from os.path import join
 from SCons.Script import DefaultEnvironment
-from common import dev_init_compiler, dev_ini_add
+from common import dev_init_compiler, dev_ini_add, dev_patch_linker
 
 def init_Template(env):
    dir = join( env.subst('$PROJECT_DIR'), 'src' )
    if not listdir( dir ):
+        dev_patch_linker(env)
         open( join(dir, 'main.c'), 'w').write('''#include <xc.h>
 #include <libpic30.h>      
 
@@ -23,8 +24,8 @@ int main(void)
 }
 ''')
         dev_ini_add(env, '''
-;custom_xc16 = C:/Program Files/Microchip/xc16/v1.2x
-;custom_heap = 8192        
+;custom_xc16 = C:/Program Files/Microchip/xc16/vX.XX
+;custom_heap = 16384        
 ;monitor_port = COM33
 ;monitor_speed = 115200
 ''' )
@@ -34,6 +35,5 @@ dev_init_compiler(env)
 init_Template(env)
 
 env.Append(
-    CPPPATH = [],
     CXXFLAGS  =  [ '-std=c++0x', ],
 )

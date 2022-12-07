@@ -28,7 +28,7 @@ env.Replace(
     LINK    = 'xc16-ld',   
     RANLIB  = 'xc16-ranlib',
     OBJCOPY = 'xc16-objdump', 
-    HEX     = 'xc16-bin2hex',
+    ELFHEX  = 'xc16-bin2hex',
     PROGSUFFIX='.elf',   
 )
 

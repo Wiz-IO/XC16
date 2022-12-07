@@ -4,11 +4,12 @@ from os import listdir
 from os.path import join
 from shutil import copyfile
 from SCons.Script import DefaultEnvironment
-from common import dev_init_compiler, dev_ini_add
+from common import dev_init_compiler, dev_ini_add, dev_patch_linker
 
 def init_Template(env):
-   dir = join( env.subst('$PROJECT_DIR'), 'src' )
-   if not listdir( dir ):
+    dir = join( env.subst('$PROJECT_DIR'), 'src' )
+    if not listdir( dir ):
+        dev_patch_linker(env)
         copyfile( join(env.framework_dir, 'arduino', 'variants', variant, 'fuses'), join(dir, 'fuses.c') )
         open( join(dir, 'main.cpp'), 'w').write('''#include <Arduino.h>
 
@@ -26,8 +27,8 @@ void loop()
 } 
 ''')   
         dev_ini_add(env, '''
-;custom_xc16 = C:/Program Files/Microchip/xc16/v1.2x
-;custom_heap = 8192        
+;custom_xc16 = C:/Program Files/Microchip/xc16/vX.XX
+;custom_heap = 16384        
 ;monitor_port = COM33
 ;monitor_speed = 115200
 ''' )
