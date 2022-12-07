@@ -27,7 +27,7 @@ Should work with PIC24H & dsPIC - TODO !!!<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips with **32k** RAM<br>
 Support: Basic Arduino API, some pins, Serial, Wire, SPI... etc, in process...<br>
-I have PIC24FJ256GB206 ( must work with PIC24FJ256GB210 too ), so, the experiments are with this [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
+I have **PIC24FJ256GB206** ( must work with PIC24FJ256GB210 too ), so, the experiments are with this [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
 Change chip from **ini**:
 ```ini
 custom_mcu = 24FJ256GB210
