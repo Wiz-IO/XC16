@@ -20,7 +20,7 @@ https://github.com/fabio-d/xc16plusplus/releases <br>
 3. Install Platform:<br>
 PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
 
-## PROBLEMS ?<br>
+## Problems ?<br>
 In general, C projects should work without problems ( any XC16 versions )<br>
 Should work on Linux & Mac too... no idea...  me: Windows<br>
 Should work with PIC24H & dsPIC - TODO !!!<br>
