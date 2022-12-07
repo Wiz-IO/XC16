@@ -25,7 +25,7 @@ In general C projects should work without problems ( any XC16 versions )<br>
 Should work on Linux & Mac too... no idea...  me: Windows<br>
 Should work with PIC24H & dsPIC - TODO !!!<br>
 The C++ compiler has some quirks... I'm experimenting...<br>
-Linker **--gc-sections** makes a problem, no idea why <br>
+_Linker **--gc-sections** makes a problem ... I found the bug, comming soon_ <br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips with **32k** RAM<br>
 Support: Basic Arduino API, some pins, Serial, Wire, SPI...<br>
