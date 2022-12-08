@@ -11,7 +11,7 @@ MODE_INTEGRATE  = 1
 
 def LOG(txt = ''):
     #txt = '[] %s() %s' % (inspect.stack()[1][3], txt)
-    #open('D:/RPI-LOG.txt', 'a+').write(txt + '\n')
+    #open('D:/LOG.txt', 'a+').write(txt + '\n')
     pass
 
 def ERROR(txt = ''):

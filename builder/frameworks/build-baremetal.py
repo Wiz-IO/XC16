@@ -34,6 +34,4 @@ env = DefaultEnvironment()
 dev_init_compiler(env)
 init_Template(env)
 
-env.Append(
-    CXXFLAGS  =  [ '-std=c++0x', ],
-)
+#env.Append()

@@ -26,11 +26,11 @@ def dev_get_value(env, name, default):
     return env.GetProjectOption('custom_%s' % name, # ini user config  
            env.BoardConfig().get('build.%s' % name, default) ) # default from board
 
-def dev_init_compiler(env, application_name = 'APPLICATION'):
+def dev_init_compiler(env):
     env['PLATFORM_DIR' ] = env.platform_dir  = dirname( env['PLATFORM_MANIFEST'] )
     env['FRAMEWORK_DIR'] = env.framework_dir = env.PioPlatform().get_package_dir( FRAMEWORK_NAME )    
     env.Replace( 
-        PROGNAME = env.GetProjectOption('custom_name', application_name) # INIDOC 
+        PROGNAME = env.GetProjectOption('custom_name', 'APPLICATION') # INIDOC 
     )
 
     INFO('XC16      : %s' % env.xc16_ver)
@@ -74,6 +74,7 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
             '-no-legacy-libc' if env.xc16_ver > 1.25 else '', 
         ],
         CXXFLAGS = [
+            '-std=c++0x',
             '-fno-rtti',
             '-fno-exceptions',
             '-fno-use-cxa-atexit',      # __cxa_atexit, __dso_handle
@@ -90,13 +91,12 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         ],
         LIBS = [ 'm', 'c', 'pic30' ], 
         LINKFLAGS = [ 
-            '--heap='+env.GetProjectOption('custom_heap', '8129'),            
+            '--heap='+env.GetProjectOption('custom_heap', '8129'), # INIDOC    
             '--local-stack', 
+            '--gc-sections',            
             '-p' + env.chip, 
-            '--script', 
-            join('src', 'p' + env.chip + '.gld'),            
-            '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')),
-            '--gc-sections',
+            '--script', join('src', 'p' + env.chip + '.gld'),            
+            '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')) if env.GetProjectOption('custom_map', None) else '', # INIDOC enable
         ],
 
         BUILDERS = dict(
@@ -107,7 +107,8 @@ def dev_init_compiler(env, application_name = 'APPLICATION'):
         ),        
     )
 
-    env.AddPostAction(
-        '$BUILD_DIR/${PROGNAME}.elf',
-        env.VerboseAction(' '.join([ '$OBJCOPY', '-omf=elf', '-S', '$BUILD_DIR/${PROGNAME}.elf', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
-    )
+    if env.GetProjectOption('custom_asm', None): # INIDOC enable
+        env.AddPostAction(
+            '$BUILD_DIR/${PROGNAME}.elf',
+            env.VerboseAction(' '.join([ '$OBJCOPY', '-omf=elf', '-S', '$BUILD_DIR/${PROGNAME}.elf', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
+        )

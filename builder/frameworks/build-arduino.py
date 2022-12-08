@@ -46,7 +46,6 @@ env.Append(
         join(env.framework_dir, 'arduino', 'cores', core), 
         join(env.framework_dir, 'arduino', 'variants', variant), 
     ],
-    CXXFLAGS = [ '-std=c++0x', ],
     LIBSOURCE_DIRS = [ join(env.framework_dir, 'arduino', "libraries", core) ],
     LIBPATH        = [ join(env.framework_dir, 'arduino', "libraries", core) ],
 )
