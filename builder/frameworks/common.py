@@ -54,7 +54,9 @@ def dev_init_compiler(env):
             join(env.xc16_dir, 'support', 'generic', 'h'),
             join(env.xc16_dir, 'support', env.core, 'h'),
         ],
-        CFLAGS = [],
+        CFLAGS = [
+            '-std=gnu99',
+        ],
         CCFLAGS = [
             #'-O0', # !!! LICENSED COMPILER
             '-mcpu=' + env.chip,
