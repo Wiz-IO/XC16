@@ -1,6 +1,6 @@
 # Microchip XC16 PlatformIO
 
-** FOR NOW IS JUST EXPERIMENT !?!** <br> 
+**FOR NOW IS JUST EXPERIMENT !?!** <br> 
 **and there may be many errors...**
 
 ![pic](https://raw.githubusercontent.com/Wiz-IO/LIB/master/images/arduino_pic24f.jpg)
