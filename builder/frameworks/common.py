@@ -42,7 +42,6 @@ def dev_init_compiler(env):
     env.Append(
         #ASFLAGS=[],
         CPPDEFINES = [
-           '__bool_true_and_false_are_defined', 
            '__PIC' + env.chip + '__',
            'FCY=' + dev_get_value(env, 'f_cpu', '16000000L'), # INIDOC, FCY = FOSC / 2
         ],
@@ -76,6 +75,7 @@ def dev_init_compiler(env):
             '-no-legacy-libc' if env.xc16_ver > 1.25 else '', 
         ],
         CXXFLAGS = [
+            '-D__bool_true_and_false_are_defined',
             '-std=c++0x',
             '-fno-rtti',
             '-fno-exceptions',
@@ -114,3 +114,5 @@ def dev_init_compiler(env):
             '$BUILD_DIR/${PROGNAME}.elf',
             env.VerboseAction(' '.join([ '$OBJCOPY', '-omf=elf', '-S', '$BUILD_DIR/${PROGNAME}.elf', '> $BUILD_DIR/${PROGNAME}.lst']), 'Creating List ${PROGNAME}.lst'),
         )
+    
+###############################################################################
