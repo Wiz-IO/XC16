@@ -35,6 +35,19 @@ custom_mcu = 24FJ256GB210
 MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program<br>
 _I can't find a better solution for now..._
 
+Reverse engineering of PicKit4 protocol ... coming soon
+```
+ 00 01 00 00                    CMD
+ 00 00 00 00                    SEQ always zero
+ 38 01 00 00                    PACKET SIZE
+ 00 00 00 00                    TRANSFER LENGTH
+ 08 00 00 00                    PRM SIZE
+ 18 01 00 00                    SCR SIZE
+ 00 00 80 00 EE 0B 00 00        PRM[]
+ E0 00 02 04 E0 00 02 04 ...    SCR[]
+```
+
+
 ## INI
 ```ini
 [env:WizIO-PIC24FJ256GB206]
