@@ -20,8 +20,8 @@ Must work for PicKit4, Snap, PKOB...<br>
  00 00 00 00                    TRANSFER LENGTH ( if )
  08 00 00 00                    PARAMS SIZE
  18 01 00 00                    SCRIPT SIZE
- 00 00 80 00 EE 0B 00 00        PARAMS[n]
- E0 00 02 04 E0 00 02 04 ...    SCRIPT[n]
+ 00 00 80 00 EE 0B 00 00        PARAMS[n] ( if )
+ E0 00 02 04 E0 00 02 04 ...    SCRIPT[n] ( if )
 ```
 
 other info: TODO
