@@ -34,7 +34,7 @@ custom_mcu = 24FJ256GB210
 ## UPLOADER<br>
 [Integrated PicKit4 uploader, based of reverse engineering of Pickit4 protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
 ( must work with PK4, Snap... etc )<br>
-"Plan B" use MPLAB IPE ( PICKIT 3, 4 etc ) - Load HEX, Program<br>
+_"Plan B" use MPLAB IPE ( PicKit etc ) - Load HEX, Program_<br>
 
 
 
