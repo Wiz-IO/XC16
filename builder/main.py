@@ -1,8 +1,11 @@
 # Copyright 2022 (c) 2022 WizIO ( Georgi Angelov )
 
-from os.path import join
+from os.path import join, dirname
 from SCons.Script import AlwaysBuild, DefaultEnvironment, Default
 from frameworks.wiz import ERROR
+
+from platformio import proc
+PYTHON_PATH = dirname(proc.get_pythonexe_path())
 
 env = DefaultEnvironment()
 
@@ -12,7 +15,7 @@ env.Prepend(_LIBFLAGS='--start-group ')
 env.Append(_LIBFLAGS=' --end-group')
 
 env.xc16_dir = env.GetProjectOption('custom_xc16', 'C:\\Program Files\\Microchip\\xc16\\v1.50')
-env['ENV']['PATH'] = '' + join(env.xc16_dir, 'bin')
+env['ENV']['PATH'] = '' + join(env.xc16_dir, 'bin' + ';' + PYTHON_PATH)
 
 env.xc16_ver = 1.50
 x = env.xc16_dir.replace('/','').replace('\\','').split('xc16')
@@ -52,7 +55,7 @@ else:
     Default( prg )
 
 # UPLOAD ######################################################################
-upload = env.Alias('upload', prg, env.VerboseAction('$UPLOADCMD', ' - Uploading'), ) 
+upload = env.Alias('upload', prg, env.VerboseAction('$UPLOADCMD', 'Uploading...'), ) 
 AlwaysBuild( upload )
 
 #print(env.Dump())
