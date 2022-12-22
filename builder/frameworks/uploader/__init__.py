@@ -1,0 +1,1 @@
+# Copyright 2022 (c) 2022 WizIO ( Georgi Angelov )
