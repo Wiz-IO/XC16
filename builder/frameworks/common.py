@@ -4,6 +4,7 @@ from os.path import join, dirname
 from shutil import copyfile
 from SCons.Script import Builder
 from wiz import INFO, FRAMEWORK_NAME
+from uploader.PK4 import dev_uploader
 
 def dev_patch_linker(env):
     dir = join( env.subst('$PROJECT_DIR'), 'src' )
@@ -100,13 +101,13 @@ def dev_init_compiler(env):
             '--script', join('src', 'p' + env.chip + '.gld'),            
             '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')) if env.GetProjectOption('custom_map', None) else '', # INIDOC enable
         ],
-
         BUILDERS = dict(
             ELF2HEX = Builder(
                 action = env.VerboseAction(' '.join([ '$ELFHEX', '$SOURCES', '-a']), 'Creating HEX $TARGET'),
                 suffix = '.hex'
             )           
-        ),        
+        ), 
+        UPLOADCMD = dev_uploader,       
     )
 
     if env.GetProjectOption('custom_asm', None): # INIDOC enable
