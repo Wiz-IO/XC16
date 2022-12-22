@@ -1,4 +1,4 @@
 # Uploader
-## is based of reverse engineering of Pickit4 protocol
+## Based of reverse engineering of Pickit4 protocol
 
 soon...
