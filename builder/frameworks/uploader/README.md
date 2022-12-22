@@ -23,5 +23,6 @@ Must work for PicKit4, Snap, PKOB...<br>
  00 00 80 00 EE 0B 00 00        PARAMS[n] ( if )
  E0 00 02 04 E0 00 02 04 ...    SCRIPT[n] ( if )
 ```
+The first 16 bits is named HEADER
 
 other info: TODO
