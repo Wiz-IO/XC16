@@ -26,7 +26,7 @@ except ImportError:
     result = proc.exec_command( args, stdout=sys.stdout, stderr=sys.stderr, stdin=sys.stdin, cwd=THIS_DIR )
     print(result)
     print('Requirements DONE')
-    print('Download and Put "libusb-1.0.dll" in PIO Python folder:', dirname(PYTHON_EXE), '\n')      
+    print('Download and Put "libusb-1.0.dll" in PIO Python folder:', dirname(PYTHON_EXE), '\n') # TODO add libs      
     print('https://github.com/libusb/libusb/releases') 
     print('and click [ Upload ] again\n') 
     exit(0)
@@ -46,10 +46,12 @@ KEY_COMMANDS_GET_ERROR_STATUS = "ERROR_STATUS_KEY"
 
 PTG_MODE_CONTROL_COMMAND    = 94 # disable ToGO mode
 
+# ICSPSel
 ICSP_WIRE_2 = 0 
 ICSP_WIRE_4 = 1
 ICSP_SWD    = 2
 
+# PGCPGDConfig 
 PULL_NONE   = 0
 PULL_UP     = 1
 PULL_DOWN   = 2
@@ -76,7 +78,7 @@ def ERROR(txt):
     time.sleep(.1)
     sys.exit(-1)
 
-def PRINT_HEX(TXT, ar, maxSize=0x600):
+def PRINT_HEX(TXT, ar, maxSize=64):
     return
     if None == ar:
         print('HEX NONE')
@@ -134,7 +136,7 @@ def get_config(H):
     rowSizeInBytes = 0x100
     a = [0xFF for i in range(rowSizeInBytes)] # fill mem
     s = None
-    for s in H.segments(): pass # get last segment
+    for s in H.segments(): pass # get last segment, TODO: find config
     data = H.tobinarray(start = s[0], end = s[1] - 1)
     i = rowSizeInBytes - len(data) # set to end
     for d in data:
@@ -142,15 +144,15 @@ def get_config(H):
         a[i] = d
         i += 1  
     a = pack_array(a)  
-    #print('SIZE', len(a))
-    #PRINT_HEX('Configuration  :', a, len(a))
+    #print('Configuration size', len(a))
     return a
 
 ###############################################################################
 
-class PK4_PIC:
+class PK4_PIC: # GEN4
     rx = b''
     timeout = TIMEOUT_DEFAULT
+    PE_ADDRESS = 0x800000 # 1024
 
     def __init__(self, USB, hex_file, device = 'PIC24FJ256GB206', device_info = None, tool_info = None):
         self.USB = USB   
@@ -161,11 +163,9 @@ class PK4_PIC:
         self.tool_info['release_power'] = False
         self.tool_info['release_reset'] = True
         self.tool_info['speed'] = 400
-        #self.tool_info['pullup'] = TODO, not need by default
         if tool_info: 
             self.tool_info = tool_info
             
-
         if device_info:
             self.device_info = device_info
         else:
@@ -190,7 +190,7 @@ class PK4_PIC:
         self.BIN_CONFIG = get_config(HEX)
         
     def hid_write(self, buffer, ep = 0x02):
-        PRINT_HEX('W[%d]:\t' %len(buffer), buffer)
+        PRINT_HEX('W[%d]\t' %len(buffer), buffer)
         try:
             self.USB.write(ep, buffer, self.timeout)
         except: 
@@ -205,14 +205,14 @@ class PK4_PIC:
         if size != len(self.rx): 
             ERROR('HID READ SIZE')       
         if size < 12:
-            PRINT_HEX('R<--:\t', self.rx, size)
+            PRINT_HEX('R[%d]\t'%size, self.rx, size)
         else:     
-            PRINT_HEX('R<--:\t', self.rx, struct.unpack('<I', self.rx[8:12])[0])    
+            PRINT_HEX('R[]\t', self.rx, struct.unpack('<I', self.rx[8:12])[0]) 
 
     def receive(self, size = 0x200, ep = 0x81):
         self.hid_read(size, ep)
         if RESULT != self.rx[0]: 
-            ERROR('RECEIVE ANSWER')
+            ERROR('RECEIVE ANSWER 13')
         return struct.unpack('<I', self.rx[8:12])[0] # payload size        
 
     def transmit(self, cmd, transferSize = 0, payload = None, ep = 0x02):
@@ -258,7 +258,7 @@ class PK4_PIC:
             res = struct.unpack('<I', self.rx[:4])[0]
         self.sendScriptDone()
         self.getStatusValueFromKey(KEY_COMMANDS_GET_ERROR_STATUS)
-        return res
+        return res # 0
 
     def sendScriptDone(self):
         self.write(SCRDONE)
@@ -268,7 +268,7 @@ class PK4_PIC:
         size = self.receive()
         s = str( self.rx[ 16 : size ], 'ascii' ).replace('\0','') 
         #print( 'Status:', s) # NONE
-        return s # string
+        return s
 
     def boot(self):     
         self.hid_write( [ GET_FIRMWARE_INFO ] )
@@ -278,8 +278,8 @@ class PK4_PIC:
         if GET_FIRMWARE_INFO != self.rx[0] or GET_FW_INFO_TYPE_APP != self.rx[1]: 
             ERROR('BOOT APP')
         serial = str( self.rx[32:47], 'utf-8').replace('\0','' )
-        #self.enablePTG(0) # disable ToGO
-        return serial
+        # self.enablePTG(0) # disable ProgramerToGO
+        return serial # BURxxx
 
     def shutDownPowerSystem(self):
         self.write(scr = [0x44])
@@ -301,12 +301,13 @@ class PK4_PIC:
     def applyLedIntensity(self, level):
         self.write(self.SCRIPT_NO_DATA, scr = [0xCF, level & 0xFF])
 
-    def applySelICSP(self, mode=1): 
-        # BootFlash=0, FlashData=1
+    def applySelICSP(self, mode = 1): 
+        # BootFlash = 0, FlashData = 1
         self.write(self.SCRIPT_NO_DATA, scr = [39, mode & 1])
 
+    # Sets the ICSP clock period to 200 (0xC8) nanoseconds
     def setSpeed(self, speed): 
-        # 100, 400
+        # 100, 400, 2400
         self.write(scr = [0xEC, (speed & 0xFF), (speed >> 8 & 0xFF), 0, 0 ]) 
 
     def getSpeed(self):
@@ -327,12 +328,14 @@ class PK4_PIC:
     def closeRelay(self, closeIt):
         self.write(scr = [0xEF, closeIt & 1])
 
-    def applySelPullUpDown(self, dir, pullChannel, pullState, resistance):
+    def applySelPullUpDown(self, dir, pullChannel, pullState, resistance=4700):
+        # dir == 0:PullUp,      cmd=205
+        # dir == 1:PullDown,    cmd=206
+        # pullDirCmd = 205, 206        
         # pullChannel [0..1]
-        # pullDirCmd = 205, 206
         # resistance = 4700 [0..50000]
         # pullState [0..1]
-        pullDirCmd = 205 if dir == 0 else 206
+        pullDirCmd = 205 + ( dir & 1 )
         self.write(scr = [ pullDirCmd, pullChannel, (resistance & 0xFF), (resistance >> 8 & 0xFF), 0, 0, pullState ])
 
 ## CMD SCRIPT #################################################################
@@ -349,22 +352,27 @@ class PK4_PIC:
         # after: enterTMOD_PE()
         pass
 
+    # Puts the PIC device into its "Programming mode" using the devices Programming Executive
     def enterTMOD_PE(self):
         self.runScript('enterTMOD_PE')     
 
+    # Puts the PIC device into its "Programming mode" (Low Voltage)
     def EnterTMOD_LV(self):
         self.runScript('EnterTMOD_LV')
 
+    # Exit programming mode
     def ExitTMOD(self):
         self.runScript('ExitTMOD')
 
+    # Read the device ID from the PIC
     def GetDeviceID(self):
         self.runScript('GetDeviceID')
         self.id = struct.unpack('<I', self.rx[24:28])[0] 
         return self.id # family, pic, revision
 
+    # Erase Executive Code Memory 0x800000
     def EraseTestmemRange(self, address, size):
-        # address = 0x80000
+        # address = PE_ADDRESS
         # size    = 0xBEE
         pass
 
@@ -372,6 +380,7 @@ class PK4_PIC:
         params = struct.pack('<I', codeGuardOption)
         self.write(scr = self.SCR['EraseChip'], prm = params)
 
+    # Write to flash ( ICSP )
     def WriteProgmem(self, address, size):
         # min size = 192 bytes
         params  = struct.pack('<I', address)
@@ -385,19 +394,28 @@ class PK4_PIC:
         )
         self.timeout = TIMEOUT_DEFAULT
 
+    # Write to Executive Code Memory ( 0x800000 )
     def WriteProgmemPE(self):
         # as WriteProgmem
+        # PE_ADDRESS
         pass
 
     def ReadProgmem(self, address, size):
         # SCRIPT_WITH_UPLOAD
         pass
 
-    def ReadProgmemWords(self):
-        # SCRIPT_WITH_UPLOAD
-        pass
-
 ## COMMON #####################################################################
+
+    def setResistors(self):
+        # for PIC24
+        # CD 00 5C 12 00 00 00 ... dir=0, pullChannel=0, resistance=4700, pullState=0
+        # CE 00 5C 12 00 00 01 ... dir=1, pullChannel=0, resistance=4700, pullState=1 
+        # CD 01 5C 12 00 00 00 ... dir=0, pullChannel=1, resistance=4700, pullState=0
+        # CE 01 5C 12 00 00 01 ... dir=1, pullChannel=1, resistance=4700, pullState=1       
+        self.applySelPullUpDown(0, 0, 0, 4700)
+        self.applySelPullUpDown(1, 0, 1, 4700)
+        self.applySelPullUpDown(0, 1, 0, 4700)
+        self.applySelPullUpDown(1, 1, 1, 4700)
 
     def get_device_id(self, test_start = True, test_end = True):
         if test_start:
@@ -419,7 +437,6 @@ class PK4_PIC:
     def program(self, buffer, address, test_start = False, test_end = False):
         if test_start:
             self.EnterTMOD_LV()   
-
         EP_SIZE = 4096
         size = len(buffer)
         self.WriteProgmem(address, size)
@@ -429,12 +446,12 @@ class PK4_PIC:
             self.hid_write(buffer[ i : i + EP_SIZE ], ep = 0x04)
             i += EP_SIZE
         self.getStatusValueFromKey(KEY_COMMANDS_GET_ERROR_STATUS)
-
         if test_end: 
             self.ExitTMOD()  
 
 ###############################################################################
 # PlatformIO Uploader
+#   PIC24FJXXXDA1/DA2/GB2/GA3/GC0
 ###############################################################################
 
 def dev_uploader(target, source, env):
@@ -452,7 +469,7 @@ def dev_uploader(target, source, env):
         print('https://github.com/libusb/libusb/releases')        
         exit(0)
     if None == USB:
-        USB = usb.core.find(idVendor=0x04D8, idProduct=0x9018) # SNAP ( not support power )
+        USB = usb.core.find(idVendor=0x04D8, idProduct=0x9018) # SNAP ( not power support )
         if USB: 
             INFO('Programer : SNAP')
     else:
@@ -477,9 +494,9 @@ def dev_uploader(target, source, env):
     INFO('ICSP Speed : %s' % d.getSpeed())
 
     d.applySelJTAGSpeed(1) # speed level ... no info ... lo/hi ?
-    # set PullUp, PullDown, 4.7k ... TODO
+    # d.setResistors() # by defaut is ok
 
-    INFO('Device ID : 0x%04X' % d.get_device_id())
+    INFO('Device ID : 0x%04X' % d.get_device_id()) # ID + Revision
 
     print('Erasing Chip...')
     d.erase_chip()
