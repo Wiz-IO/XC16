@@ -20,10 +20,10 @@
     "protocol"          : "PK4",
     "device"            : "PIC24FJ256GB206",
     "info": { 
-        "DeviceID"      : 1090846719,   "DeviceID_Note"  : "0x4104FFFF",
-        "EraseSize"     : 2048,         "EraseSize_Note" : "0x800",
-        "FlashEnd"      : 88064,        "FlashEnd_Note"  : "0x15800", 
-        "ConfigEnd"     : 175104,       "ConfigEnd_Note" : "0x2AC00",
+        "DeviceID"      : 1090846719,
+        "EraseSize"     : 2048,
+        "FlashEnd"      : 88064, 
+        "ConfigEnd"     : 175104,
         "RIPE"          : "RIPE_01c_000032.hex" 
     },
     "tool": {
