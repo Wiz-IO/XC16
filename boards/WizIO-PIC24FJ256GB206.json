@@ -30,7 +30,7 @@
         "power"         : 1,
         "release_power" : 0,
         "release_reset" : 1,
-        "speed"         : 400      
+        "speed"         : 100      
     }
   }
 }
