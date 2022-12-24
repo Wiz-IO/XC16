@@ -19,8 +19,12 @@ For now I use **1.50** ( NOT tested with a larger version. )
 https://github.com/fabio-d/xc16plusplus <br>
 https://github.com/fabio-d/xc16plusplus/releases <br>
 
-3. Install Platform:<br>
+3. Uploader use "libusb-1.0.dll" https://github.com/libusb/libusb/releases <br>
+Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )
+
+4. Install Platform:<br>
 PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
+
 
 ## Problems ?<br>
 **In general, C projects ( Baremetal ) should work without problems ( any XC16 versions )** <br>
@@ -41,8 +45,7 @@ challenge, but in some other life...
 [Integrated PicKit4 uploader, based of reverse engineering of Pickit4 protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
 _must work with PK4, Snap... etc GEN4 protocol_ <br>
 
-Note: for Windows need "libusb-1.0.dll" https://github.com/libusb/libusb/releases<br>
-Put dll in PlatformIO Python folder ( .platformio/penv/Scripts )
+Note: for Windows need "libusb-1.0.dll"<br>
 
 Demo: https://www.youtube.com/watch?v=PiL7RAr3POE <br>
 
