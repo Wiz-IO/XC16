@@ -2,12 +2,11 @@
 #   Based of Reverse Engineering of Pickit4 protocol
 #   Version: 
 #       1.0 ( PlatformIO mod )
-#
 #   Depend: 
 #       intelhex, 
-#       pyusb ( libusb-1.0.dll ) 
-#           https://github.com/libusb/libusb/releases
+#       pyusb ( libusb-1.0.dll ) https://github.com/libusb/libusb/releases
 #
+#   NOTE: Tool must be in PIC mode
 
 import sys, json, struct, time, click
 from os.path import join, normpath, dirname
@@ -59,7 +58,7 @@ PULL_DOWN   = 2
 TIMEOUT_DEFAULT = 1000
 
 PICS = { # local PIC info ... loaded from board.json
-    'PIC24FJ256GB206': { 
+    'PIC24FJ256GB206': { # PIC24FJ256GB210
         'DeviceID'          : 0x4104FFFF,   # family, pic, rev
         'EraseSize'         : 2048,         # in bytes
         'FlashEnd'          : 0x00015800, 
@@ -343,16 +342,18 @@ class PK4_PIC: # GEN4
     def runScript(self, name):
         self.write(scr = self.SCR[name])
 
+    # not used
     def CalcCRC_PE(self):
         # after: SEND FLASH DATA, getStatusValueFromKey('ERROR_STATUS_KEY'), SCRDONE()
         # return U32 len[20:+4] = 2, U16 crc[24:+2]
         pass
 
+    # not used
     def TestPEConnect(self):
         # after: enterTMOD_PE()
         pass
 
-    # Puts the PIC device into its "Programming mode" using the devices Programming Executive
+    # Puts the PIC device into its "Programming mode" using the devices Programming Executive. 
     def enterTMOD_PE(self):
         self.runScript('enterTMOD_PE')     
 
@@ -370,7 +371,7 @@ class PK4_PIC: # GEN4
         self.id = struct.unpack('<I', self.rx[24:28])[0] 
         return self.id # family, pic, revision
 
-    # Erase Executive Code Memory 0x800000
+    # Erase Executive Code Memory 0x800000 not used here
     def EraseTestmemRange(self, address, size):
         # address = PE_ADDRESS
         # size    = 0xBEE
@@ -394,12 +395,13 @@ class PK4_PIC: # GEN4
         )
         self.timeout = TIMEOUT_DEFAULT
 
-    # Write to Executive Code Memory ( 0x800000 )
+    # Write to Executive Code Memory ( 0x800000 ) not used
     def WriteProgmemPE(self):
         # as WriteProgmem
         # PE_ADDRESS
         pass
 
+    # not used
     def ReadProgmem(self, address, size):
         # SCRIPT_WITH_UPLOAD
         pass
@@ -451,15 +453,24 @@ class PK4_PIC: # GEN4
 
 ###############################################################################
 # PlatformIO Uploader
-#   PIC24FJXXXDA1/DA2/GB2/GA3/GC0
+#   PIC24FJXXXDA1/DA2/GB2/GA3/GC0 according to PDF
 ###############################################################################
 
 def dev_uploader(target, source, env):
     hex_file = join(env.get("BUILD_DIR"), env.get("PROGNAME"))+'.hex'
+
     device = env.BoardConfig().get('upload.device', None)
     INFO('Device : %s' % device)
     info = env.BoardConfig().get('upload.info', None)
-    prog = env.BoardConfig().get('upload.programer', None)
+
+    tool = env.BoardConfig().get('upload.tool', None)
+    if None == tool: 
+        ERROR('Tool settings')
+    tool_power = env.GetProjectOption('custom_tool_power', None)
+    if tool_power: tool['power'] = tool_power
+    tool_speed = env.GetProjectOption('custom_tool_speed', None)
+    if tool_speed: tool['speed'] = tool_speed
+    # print('TOOL', tool)
 
     try:
         USB = usb.core.find(idVendor=0x04D8, idProduct=0x9012) # PicKit4 ( power 50mA )
@@ -482,7 +493,7 @@ def dev_uploader(target, source, env):
     USB.set_configuration()
     USB.reset() 
 
-    d = PK4_PIC(USB, hex_file, device, info, prog)
+    d = PK4_PIC(USB, hex_file, device, info, tool)
     INFO('Serial Number : %s' %  d.boot())
 
     d.selectPowerSource( d.tool_info['power'] )
@@ -493,7 +504,7 @@ def dev_uploader(target, source, env):
     d.setSpeed(d.tool_info['speed']) 
     INFO('ICSP Speed : %s' % d.getSpeed())
 
-    d.applySelJTAGSpeed(1) # speed level ... no info ... lo/hi ?
+    d.applySelJTAGSpeed(1) # speed level - no info ... lo/hi ?
     # d.setResistors() # by defaut is ok
 
     INFO('Device ID : 0x%04X' % d.get_device_id()) # ID + Revision
