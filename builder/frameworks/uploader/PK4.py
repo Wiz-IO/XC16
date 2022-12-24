@@ -136,6 +136,7 @@ def get_config(H):
     a = [0xFF for i in range(rowSizeInBytes)] # fill mem
     s = None
     for s in H.segments(): pass # get last segment, TODO: find config
+    #print( hex(s[0]) )    
     data = H.tobinarray(start = s[0], end = s[1] - 1)
     i = rowSizeInBytes - len(data) # set to end
     for d in data:
@@ -144,6 +145,7 @@ def get_config(H):
         i += 1  
     a = pack_array(a)  
     #print('Configuration size', len(a))
+    #print(a)
     return a
 
 ###############################################################################
@@ -151,7 +153,7 @@ def get_config(H):
 class PK4_PIC: # GEN4
     rx = b''
     timeout = TIMEOUT_DEFAULT
-    PE_ADDRESS = 0x800000 # 1024
+    PE_ADDRESS = 0x00800000 # (1024 x 24-bit)
 
     def __init__(self, USB, hex_file, device = 'PIC24FJ256GB206', device_info = None, tool_info = None):
         self.USB = USB   
@@ -177,8 +179,9 @@ class PK4_PIC: # GEN4
             self.SCR = json.load(json_file)
 
         # not used
-        # HEX = IntelHex()
-        # HEX.fromfile( join(THIS_DIR,self.device_info['RIPE']), format='hex' )
+        #HEX = IntelHex()
+        #HEX.fromfile( join(THIS_DIR, self.device_info['RIPE']), format='hex' )
+        #HEX.tobinfile('PE.bin')
         # self.ARR_PE = get array, align, pack
         
         HEX = IntelHex()
@@ -355,7 +358,7 @@ class PK4_PIC: # GEN4
 
     # Puts the PIC device into its "Programming mode" using the devices Programming Executive. 
     def enterTMOD_PE(self):
-        self.runScript('enterTMOD_PE')     
+        self.runScript('EnterTMOD_PE')     
 
     # Puts the PIC device into its "Programming mode" (Low Voltage)
     def EnterTMOD_LV(self):
@@ -371,11 +374,11 @@ class PK4_PIC: # GEN4
         self.id = struct.unpack('<I', self.rx[24:28])[0] 
         return self.id # family, pic, revision
 
-    # Erase Executive Code Memory 0x800000 not used here
-    def EraseTestmemRange(self, address, size):
-        # address = PE_ADDRESS
-        # size    = 0xBEE
-        pass
+    # Erase Executive Code Memory 
+    def EraseTestmemRange(self, address, size): # size ?
+        params  = struct.pack('<I', address)
+        params += struct.pack('<I', size)
+        self.write(scr = self.SCR['EraseTestmemRange'], prm = params)
 
     def EraseChip(self, codeGuardOption = 0):
         params = struct.pack('<I', codeGuardOption)
@@ -386,16 +389,14 @@ class PK4_PIC: # GEN4
         # min size = 192 bytes
         params  = struct.pack('<I', address)
         params += struct.pack('<I', size)
-        self.timeout = 3000 # need ?
         self.write(
             cmd = SCRIPT_WITH_DOWNLOAD,
             scr = self.SCR['WriteProgmem'], 
             prm = params, 
             transferSize = size
         )
-        self.timeout = TIMEOUT_DEFAULT
 
-    # Write to Executive Code Memory ( 0x800000 ) not used
+    # Write to Executive Code Memory ( PE_ADDRESS ) not used
     def WriteProgmemPE(self):
         # as WriteProgmem
         # PE_ADDRESS
@@ -427,12 +428,17 @@ class PK4_PIC: # GEN4
             self.ExitTMOD()        
         return res
 
+    def erase_pe(self, test_start = True, test_end = True):
+        if test_start:
+            self.EnterTMOD_LV() 
+        self.EraseTestmemRange(self.PE_ADDRESS, 0x0C00) 
+        if test_end: 
+            self.ExitTMOD()          
+
     def erase_chip(self, codeGuardOption = 0, test_start = True, test_end = False):
         if test_start:
             self.EnterTMOD_LV() 
-        self.timeout = 3000 # need ?
-        self.EraseChip(codeGuardOption) # codeGuardOption: no info
-        self.timeout = TIMEOUT_DEFAULT
+        self.EraseChip( codeGuardOption ) # codeGuardOption: no info
         if test_end: 
             self.ExitTMOD()  
 
@@ -447,9 +453,11 @@ class PK4_PIC: # GEN4
             if i >= size: break
             self.hid_write(buffer[ i : i + EP_SIZE ], ep = 0x04)
             i += EP_SIZE
+            time.sleep(.1)
         self.getStatusValueFromKey(KEY_COMMANDS_GET_ERROR_STATUS)
         if test_end: 
             self.ExitTMOD()  
+        time.sleep( len(buffer) * 0.00005 ) # TODO ??? 
 
 ###############################################################################
 # PlatformIO Uploader
@@ -470,7 +478,7 @@ def dev_uploader(target, source, env):
     if tool_power: tool['power'] = tool_power
     tool_speed = env.GetProjectOption('custom_tool_speed', None)
     if tool_speed: tool['speed'] = tool_speed
-    # print('TOOL', tool)
+    #print('TOOL', tool)
 
     try:
         USB = usb.core.find(idVendor=0x04D8, idProduct=0x9012) # PicKit4 ( power 50mA )
@@ -512,9 +520,9 @@ def dev_uploader(target, source, env):
     print('Erasing Chip...')
     d.erase_chip()
 
-    print('Program Application...')
-    d.program(d.BIN_FLASH, 0)
-
+    print('Program Application [ %d ]' % len(d.BIN_FLASH))
+    d.program(d.BIN_FLASH, 0)  
+    
     if len(d.BIN_CONFIG) > 0:
         print('Program Configiguration bits...')    
         d.program(d.BIN_CONFIG, d.device_info['ConfigEnd'] - ((len(d.BIN_CONFIG) // 3) * 2) )
