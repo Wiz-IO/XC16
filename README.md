@@ -40,7 +40,7 @@ challenge, but in some other life...
 
 ## UPLOADER<br>
 [Integrated PicKit4 uploader, based of reverse engineering of Pickit4 protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
-( must work with PK4, Snap... etc )<br>
+_( must work with PK4, Snap... etc GEN4 protocol )_ <br>
 Demo: https://www.youtube.com/watch?v=PiL7RAr3POE <br>
 _"Plan B" use MPLAB IPE ( PicKit etc ) - Load HEX, Program_<br>
 
