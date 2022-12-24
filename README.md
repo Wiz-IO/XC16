@@ -66,6 +66,7 @@ for CPP projects, rename main.c to main.cpp
 
 ## Arduino 
 Support: Basic Arduino API, some pins, Serial, Wire, SPI... etc, in process...
+_Note: SPI phrase is used from Microchip SDK, so, the library use **Spi** _
 
 **Example**
 ```cpp
