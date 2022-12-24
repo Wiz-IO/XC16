@@ -28,7 +28,7 @@ PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC
 
 ## Problems ?<br>
 **In general, C projects ( Baremetal ) should work without problems ( any XC16 versions )** <br>
-Should work on Linux & Mac too... no idea...  me: Windows<br>
+Should work on Linux & Mac too ... no idea, me: Windows<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips ( for Arduino ) with **32k** RAM<br>
 I have **PIC24FJ256GB206** ( must work with PIC24FJ256GB210 too ), so, the experiments are with this [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
