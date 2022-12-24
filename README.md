@@ -39,7 +39,7 @@ challenge, but in some other life...
 
 ## UPLOADER<br>
 [Integrated PicKit4 uploader, based of reverse engineering of Pickit4 protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
-_ must work with PK4, Snap... etc GEN4 protocol _ <br>
+_must work with PK4, Snap... etc GEN4 protocol_ <br>
 Note: for Windows need "libusb-1.0.dll" https://github.com/libusb/libusb/releases<br>
 
 Demo: https://www.youtube.com/watch?v=PiL7RAr3POE <br>
