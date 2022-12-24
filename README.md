@@ -23,7 +23,7 @@ https://github.com/fabio-d/xc16plusplus/releases <br>
 PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
 
 ## Problems ?<br>
-**In general, C projects (Baremetal) should work without problems ( any XC16 versions )** <br>
+**In general, C projects ( Baremetal ) should work without problems ( any XC16 versions )** <br>
 Should work on Linux & Mac too... no idea...  me: Windows<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips ( for Arduino ) with **32k** RAM<br>
