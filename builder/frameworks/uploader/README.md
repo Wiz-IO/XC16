@@ -11,7 +11,7 @@ https://github.com/libusb/libusb/releases<br>
 ## Protocol ( PIC mode)
 
 Must work for PicKit4, Snap, PKOB...<br>
-( tested with PK4 and PIC24FJ )
+_( tested with PK4 and PIC24F )_
 
 ```
  00 01 00 00                    COMMAND TYPE
