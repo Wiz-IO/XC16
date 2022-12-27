@@ -1,5 +1,5 @@
 # Uploader
-## Based of reverse engineering of Pickit4 protocol
+## Based of reverse engineering of GEN4 ( Pickit4, Snap... ) protocol
 ( The project is a work in progress, there may be bugs... )
 
 Python Depends: intelhex & pyusb ( libusb-1.0.dll )<br> 
