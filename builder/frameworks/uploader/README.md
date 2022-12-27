@@ -23,6 +23,8 @@ Must work for PicKit4, Snap, PKOB...<br>
  00 00 80 00 EE 0B 00 00        PARAMS[n] ( if )
  E0 00 02 04 E0 00 02 04 ...    SCRIPT[n] ( if )
 ```
-The first 16 bits is named HEADER
+The first 16 bytes is named HEADER<br>
+COMMAND TYPE is command for: simple packet, packet with upload or download data ... etc<br>
+The SCRIPTs is byte-code operations ... as function with PARAMS<br>
 
 other info: TODO
