@@ -25,6 +25,6 @@ Must work for PicKit4, Snap, PKOB...<br>
 ```
 The first 16 bytes is named HEADER<br>
 COMMAND TYPE is command for: simple packet, packet with upload or download data ... etc<br>
-The SCRIPTs is byte-code operations ... as function with PARAMS<br>
+The SCRIPTs is byte-code operations ... as function with PARAMS ( if there is )<br>
 
 other info: TODO
