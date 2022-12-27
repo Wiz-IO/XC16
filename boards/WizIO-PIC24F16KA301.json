@@ -1,0 +1,38 @@
+{
+  "name": "WizIO-PIC24F16KA301",
+  "url": "https://github.com/Wiz-IO",
+  "vendor": "WizIO",
+  "frameworks": [ "Baremetal" ],
+
+  "build": {
+    "core"      : "PIC24F",    
+    "mcu"       : "24F16KA301",
+    "variant"   : "WizIO-PIC24F16KA301",
+    "f_cpu"     : "16000000L"
+  },
+
+  "debug": { },
+
+  "upload": {
+    "maximum_ram_size"  :  2048,
+    "maximum_size"      : 16896,
+   
+    "protocol"          : "PK4",
+    "device"            : "PIC24F16KA301",
+    "info": { 
+        "DeviceID"      : 1158217727,
+        "EraseSize"     : 2048,
+        "FlashEnd"      : 11264, 
+        "Eeprom"        : 8388096,
+        "EepromSize"    : 256,        
+        "Config"        : 16252928,
+        "ConfigSize"    : 18
+    },
+    "tool": {
+        "power"         : 1,
+        "release_power" : 0,
+        "release_reset" : 1,
+        "speed"         : 100      
+    }
+  }
+}
