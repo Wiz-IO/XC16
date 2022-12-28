@@ -1,14 +1,16 @@
 {
   "name": "WizIO-PIC24FJ256GB206",
-  "url": "https://github.com/Wiz-IO",
-  "vendor": "WizIO",
+  "url": "https://github.com/Wiz-IO/XC16",
+  "vendor": "Microchip",
   "frameworks": [ "Baremetal", "Arduino" ],
 
   "build": {
-    "core"      : "PIC24F",    
+    "category"  : "PIC24F",
     "mcu"       : "24FJ256GB206",
+    "core"      : "PIC24FJ",    
     "variant"   : "WizIO-PIC24FJ256GB206",
-    "f_cpu"     : "16000000L"
+    "f_cpu"     : "16000000L",
+    "heap"      : "8129"
   },
 
   "debug": { },
@@ -17,14 +19,12 @@
     "maximum_ram_size"  :  32768,
     "maximum_size"      : 262144,
    
-    "protocol"          : "PK4",
+    "protocol"          : "GEN4",
     "device"            : "PIC24FJ256GB206",
     "info": { 
         "DeviceID"      : 1090846719,
-        "EraseSize"     : 2048,
         "FlashEnd"      : 88064, 
-        "ConfigEnd"     : 175104,
-        "RIPE"          : "RIPE_01c_000032.hex" 
+        "FlashConfigEnd": 175104
     },
     "tool": {
         "power"         : 1,

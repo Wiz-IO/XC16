@@ -1,13 +1,12 @@
 {
   "name": "WizIO-PIC24F16KA301",
-  "url": "https://github.com/Wiz-IO",
-  "vendor": "WizIO",
+  "url": "https://github.com/Wiz-IO/XC16",
+  "vendor": "Microchip",
   "frameworks": [ "Baremetal" ],
 
   "build": {
-    "core"      : "PIC24F",    
+    "category"  : "PIC24F",
     "mcu"       : "24F16KA301",
-    "variant"   : "WizIO-PIC24F16KA301",
     "f_cpu"     : "16000000L"
   },
 
@@ -17,11 +16,10 @@
     "maximum_ram_size"  :  2048,
     "maximum_size"      : 16896,
    
-    "protocol"          : "PK4",
+    "protocol"          : "GEN4",
     "device"            : "PIC24F16KA301",
     "info": { 
         "DeviceID"      : 1158217727,
-        "EraseSize"     : 2048,
         "FlashEnd"      : 11264, 
         "Eeprom"        : 8388096,
         "EepromSize"    : 256,        
