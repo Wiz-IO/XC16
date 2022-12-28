@@ -47,7 +47,7 @@ else: ERROR('[MAIN] Wrong platform: %s' % env['PIOFRAMEWORK'][0])
 
 AlwaysBuild( prg )
 
-# DEBUG ####################################################################### TODO
+# DEBUG #######################################################################
 debug_tool = env.GetProjectOption('debug_tool')
 if None == debug_tool:
     Default( prg )
