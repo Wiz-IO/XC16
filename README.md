@@ -67,7 +67,7 @@ monitor_speed = 115200
 ```
 
 ## Baremetal
-_is just a platform name of the C projects here_ <br>
+is just a platform name of the C projects here <br>
 for CPP projects, rename main.c to main.cpp
 
 ## Arduino 
