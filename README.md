@@ -57,7 +57,7 @@ framework = Arduino ; or Baremetal
 
 ;custom_xc16 = C:\Program Files\Microchip\xc16\v1.50 ; select custom version, default is 1.50
 
-;custom_heap = 8129 ; for Arduino & C++ 
+;custom_heap = 8129 ; change other
 
 monitor_port = COM26
 monitor_speed = 115200
