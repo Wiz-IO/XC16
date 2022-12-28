@@ -47,7 +47,7 @@ Note: for Windows need "libusb-1.0.dll"<br>
 
 Demo: https://www.youtube.com/watch?v=PiL7RAr3POE <br>
 
-Backup **"Plan B"** - use MPLAB IPE ( PicKit etc ) - Load HEX, Program<br>
+Backup **plan B** - use MPLAB IPE ( PicKit etc ) - Load HEX, Program<br>
 
 
 
