@@ -40,8 +40,8 @@ challenge, but in some other life...
 
 
 ## UPLOADER<br>
-[Integrated PicKit4 uploader, based of reverse engineering of Pickit4 protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
-_must work with PK4, Snap... etc GEN4 protocol_ <br>
+[Integrated uploader, based of reverse engineering of PicKit4 ( GEN4 ) protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
+_must work with PicKit4, Snap... etc_ <br>
 
 Note: for Windows need "libusb-1.0.dll"<br>
 
