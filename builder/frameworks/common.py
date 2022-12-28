@@ -4,19 +4,19 @@ from os.path import join, dirname
 from shutil import copyfile
 from SCons.Script import Builder
 from wiz import INFO, FRAMEWORK_NAME
-from uploader.PK4 import dev_uploader
+from uploader.GEN4 import dev_uploader
 
 def dev_patch_linker(env):
     dir = join( env.subst('$PROJECT_DIR'), 'src' )
     copyfile(
-        join(env.xc16_dir, 'support', env.core, 'gld', 'p' + env.chip + '.gld'),
-        join(dir, 'p' + env.chip + '.gld')
+        join(env.xc16_dir, 'support', env.category, 'gld', 'p' + env.mcu + '.gld'),
+        join(dir, 'p' + env.mcu + '.gld')
     )
-    f = open(join(dir, 'p' + env.chip + '.gld'), 'r')
+    f = open(join(dir, 'p' + env.mcu + '.gld'), 'r')
     txt = f.read()
     f.close()
     txt = txt.replace('*(.user_init);', 'KEEP( *(.user_init) ); /* WIzIO: --gc-sections workaround */')
-    open(join(dir, 'p' + env.chip + '.gld'), 'w').write(txt)
+    open(join(dir, 'p' + env.mcu + '.gld'), 'w').write(txt)
 
 def dev_ini_add(env, txt):
     f = open( join( env.subst('$PROJECT_DIR'), 'platformio.ini' ), 'a+' )
@@ -34,16 +34,19 @@ def dev_init_compiler(env):
         PROGNAME = env.GetProjectOption('custom_name', 'APPLICATION') # INIDOC 
     )
 
-    INFO('XC16      : %s' % env.xc16_ver)
-    env.core = dev_get_value(env, 'core', 'PIC24F') # INIDOC
-    INFO('CORE      : %s' % env.core )
-    env.chip = dev_get_value(env, 'mcu', '24FJ256GB206') # INIDOC
-    INFO('CHIP      : %s' % env.chip )
+    INFO('XC16 : %s' % env.xc16_ver)
+    if 'Arduino' in env['PIOFRAMEWORK']:
+        INFO('CORE : %s' % env.BoardConfig().get('build.core') )
+    env.category = env.BoardConfig().get('build.category')      
+    env.mcu     = env.BoardConfig().get('build.mcu')           
+    INFO('CHIP : %s' % env.mcu )
+    heap = dev_get_value(env, 'heap', '0') # INIDOC 
+    INFO('HEAP : %s' % heap ) 
 
     env.Append(
         #ASFLAGS=[],
         CPPDEFINES = [
-           '__PIC' + env.chip + '__',
+           '__PIC' + env.mcu + '__',
            'FCY=' + dev_get_value(env, 'f_cpu', '16000000L'), # INIDOC, FCY = FOSC / 2
         ],
         CPPPATH = [
@@ -52,14 +55,14 @@ def dev_init_compiler(env):
             join('$PROJECT_DIR', 'include'),
             join(env.xc16_dir, 'include'),
             join(env.xc16_dir, 'support', 'generic', 'h'),
-            join(env.xc16_dir, 'support', env.core, 'h'),
+            join(env.xc16_dir, 'support', env.category, 'h'),
         ],
         CFLAGS = [
             '-std=gnu99',
         ],
         CCFLAGS = [
-            #'-O0', # !!! LICENSED COMPILER
-            '-mcpu=' + env.chip,
+            #'-O0', # LICENSED COMPILER
+            '-mcpu=' + env.mcu,
             '-mno-eds-warn',
             '-mlarge-code', 
             '-mlarge-data', 
@@ -89,16 +92,16 @@ def dev_init_compiler(env):
         ],        
         LIBPATH = [ 
             join(env.xc16_dir, 'lib'),
-            join(env.xc16_dir, 'lib', env.core),
+            join(env.xc16_dir, 'lib', env.category),
             join('$PROJECT_DIR', 'lib'), 
         ],
         LIBS = [ 'm', 'c', 'pic30' ], 
         LINKFLAGS = [ 
-            '--heap='+env.GetProjectOption('custom_heap', '8129'), # INIDOC    
+            '--heap=' + heap,  
             '--local-stack', 
             '--gc-sections',            
-            '-p' + env.chip, 
-            '--script', join('src', 'p' + env.chip + '.gld'),            
+            '-p' + env.mcu, 
+            '--script', join('src', 'p' + env.mcu + '.gld'),            
             '-Map=%s.map' % env.subst(join('$BUILD_DIR','$PROGNAME')) if env.GetProjectOption('custom_map', None) else '', # INIDOC enable
         ],
         BUILDERS = dict(

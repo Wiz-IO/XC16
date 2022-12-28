@@ -26,7 +26,7 @@ int main(void)
         dev_ini_add(env, '''
 ;custom_xc16 = C:/Program Files/Microchip/xc16/vX.XX
 ;custom_heap = 16384        
-;monitor_port = COM33
+;monitor_port = COM26
 ;monitor_speed = 115200
 ''' )
 
