@@ -28,3 +28,9 @@ COMMAND TYPE is command for: simple packet, packet with upload or download data 
 The SCRIPTs is byte-code operations ... as function with PARAMS ( if there is )<br>
 
 other info: TODO
+
+## INI custom settings
+```ini
+custom_tool_power = 0/1
+custom_tool_speed = 200 ; nano seconds
+```
