@@ -31,6 +31,6 @@ other info: TODO
 
 ## INI custom settings
 ```ini
-custom_tool_power = 0/1
-custom_tool_speed = 200 ; nano seconds
+custom_tool_power = 0/1 ; default value from board
+custom_tool_speed = 200 ; nano seconds, default value from board
 ```
