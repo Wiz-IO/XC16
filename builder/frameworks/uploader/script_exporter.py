@@ -21,8 +21,15 @@ scripts_file_path = 'C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC
 
 DIC = {}
 DIC['PIC'] = 'PIC24FJ256GB206' # select pic
+DIC['PIC'] = 'PIC24F16KA301' # select pic
 
 THIS_DIR = normpath( dirname(__file__) )
+
+def PRINT_HEX(TXT, ar):
+    txt = ''
+    for a in ar:
+        txt += '%02X ' % a
+    print(TXT, txt)
 
 def get_scr(f):
     SCR = []
@@ -46,6 +53,7 @@ def get_script(f):
             name = re.search('%s(.*)%s' % ('<function>', '</function>'), L).group(1)
             #print('FUNCTION :', name)    
             #print('SCRIPT   :', SCR)  
+            PRINT_HEX(name, SCR)
             DIC[name] = SCR   
             break
         SCR = get_scr(f)
