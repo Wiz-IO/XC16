@@ -6,7 +6,9 @@
 #       intelhex, 
 #       pyusb ( libusb-1.0.dll ) https://github.com/libusb/libusb/releases
 #
-#   NOTE: Tool must be in PIC mode
+#   NOTES: 
+#       Tool must be in PIC mode
+#
 
 import sys, json, struct, time, click
 from os.path import join, normpath, dirname
