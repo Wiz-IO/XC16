@@ -30,14 +30,12 @@ PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC
 **In general, C projects ( Baremetal ) should work without problems ( any XC16 versions )** <br>
 Should work on Linux & Mac too ... no idea, me: Windows<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
-Recommended chips ( for Arduino ) with **32k** RAM<br>
+Recommended chips for Arduino & C++ with **32k** RAM<br>
 I have on hand **PIC24FJ256GB206** & PIC24F16KA301<br>
 so, the experiments are with this [boards](https://github.com/Wiz-IO/XC16/blob/main/boards)<br>
 
-
 ## Debugging
-challenge, but in some other life...
-
+Challenge, but in some other life...
 
 ## UPLOADER<br>
 [Integrated uploader, based of reverse engineering of PicKit4 ( GEN4 ) protocol](https://github.com/Wiz-IO/XC16/tree/main/builder/frameworks/uploader)<br>
@@ -50,7 +48,6 @@ Demo: https://www.youtube.com/watch?v=PiL7RAr3POE <br>
 Backup **plan B** - use MPLAB IPE ( PicKit etc ) - Load HEX, Program<br>
 
 
-
 ## INI
 ```ini
 [env:WizIO-PIC24FJ256GB206]
@@ -60,7 +57,7 @@ framework = Arduino ; or Baremetal
 
 ;custom_xc16 = C:\Program Files\Microchip\xc16\v1.50 ; select custom version, default is 1.50
 
-;custom_heap = 8129 ; is default
+;custom_heap = 8129 ; is default for Arduino (C++) 
 
 monitor_port = COM26
 monitor_speed = 115200
