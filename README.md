@@ -31,7 +31,8 @@ PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC
 Should work on Linux & Mac too ... no idea, me: Windows<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips ( for Arduino ) with **32k** RAM<br>
-I have **PIC24FJ256GB206** ( must work with PIC24FJ256GB210 too ), so, the experiments are with this [board](https://github.com/Wiz-IO/XC16/blob/main/boards/WizIO-PIC24FJ256GB206.json)<br>
+I have on hand **PIC24FJ256GB206** & PIC24F16KA301<br>
+so, the experiments are with this [boards](https://github.com/Wiz-IO/XC16/blob/main/boards)<br>
 
 
 ## Debugging
