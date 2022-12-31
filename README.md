@@ -18,6 +18,12 @@ For now I use **1.50** ( NOT tested with a larger version. )
 2. Install C++ Compiler ( need for CPP projects and Arduino )<br>
 https://github.com/fabio-d/xc16plusplus <br>
 https://github.com/fabio-d/xc16plusplus/releases <br>
+Extract to xc16/v1.50/bin/bin:
+* **elf-cc1plus** (Linux and OS X) or elf-cc1plus.exe (Windows)
+* **elf-g++** (Linux and OS X) or elf-g++.exe (Windows)
+Copy/Paste/Rename ( or symlink ):
+* bin/xc16-cc1 to bin/ **xc16-cc1plus**
+* bin/xc16-gcc to bin/ **xc16-g++**
 
 3. Uploader use "libusb-1.0.dll" https://github.com/libusb/libusb/releases <br>
 Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )
