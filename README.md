@@ -27,9 +27,11 @@ Copy/Paste/Rename ( or symlink ):
 * bin/xc16-cc1 to bin/ **xc16-cc1plus**
 * bin/xc16-gcc to bin/ **xc16-g++**
 
+<br>
 3. Uploader use "libusb-1.0.dll" https://github.com/libusb/libusb/releases <br>
 Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )
 
+<br>
 4. Install Platform:<br>
 PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
 
