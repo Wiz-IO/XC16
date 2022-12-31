@@ -29,7 +29,7 @@ Copy/Paste/Rename ( or symlink ):
 
 <br>
 3. Uploader use "libusb-1.0.dll" https://github.com/libusb/libusb/releases <br>
-Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )
+Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )<br>
 
 <br>
 4. Install Platform:<br>
