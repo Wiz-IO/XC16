@@ -103,7 +103,7 @@ def PRINT_HEX(TXT, ar, maxSize=0x200):
         txt += '%02X ' % a
     print(TXT, txt)
 
-def DUMP(txt, data, mod=32, print_chars=False, cnt = 64, max = True):
+def DUMP(txt, data, mod=32, print_chars=False, cnt=64, max=True):
     return
     i = 1
     s = '\t'
@@ -134,8 +134,7 @@ def pack_array(arr):
         if len(b) == 0:
             break
         b[3] = b[6]
-        for j in range(6):
-            a.append( b[j] )
+        a += b[ 0 : 6 ]
         i += 8
     return a
 
@@ -159,18 +158,17 @@ def get_data_24(H, address_start, address_end, align_bytes = 256, cut = False):
 def get_data_16(H, address, size):
     address *= 2
     size    *= 2
-    a = []
     if address < 0 or size == 0:
         return []
     data = H.tobinarray(start = address, end = address + size - 1)
+    a = []    
     i = 0
-    for d in data:
-        if i > 1: # remove zeroes
-            if i > 2:
-                i = -1
-        else:
-            a.append(d)
-        i += 1
+    while True: # remove MSB zeroes
+        b = data[ i : i + 4 ]
+        if len(b) == 0:
+            break
+        a += b[ 0 : 2]
+        i += 4
     for b in a: # skip if blank
         if b != 0xFF:
             return a
@@ -444,7 +442,6 @@ class GEN4:
 
     # Write to Executive Code Memory ( PE_ADDRESS ) not used
     def WriteProgmemPE(self):
-        # as WriteProgmem
         pass
 
     def ReadProgmem(self, address, size):
