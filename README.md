@@ -33,7 +33,7 @@ Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )<br>
 
 <br>
 4. Install Platform:<br>
-PIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
+(VSCode) PlatformIO Home > Platforms > Advanced Installation: paste https://github.com/Wiz-IO/XC16
 
 
 ## Problems ?<br>
