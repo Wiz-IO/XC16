@@ -417,7 +417,8 @@ class GEN4:
             transferSize = size
         )
 
-    ### WRITE
+    ### WRITE ###
+
     def WriteProgmem(self, address, size):
         self._pyload('WriteProgmem', address, size)
 
@@ -433,7 +434,8 @@ class GEN4:
     def WriteProgmemPE(self, address, size):
         self._pyload('WriteProgmemPE', address, size)
 
-    ### READ
+    ### READ ###
+
     def ReadProgmem(self, address, size):
         self._pyload('ReadProgmem', address, size, 'READ')
 
