@@ -1,0 +1,34 @@
+{
+  "name": "WizIO-dsPIC33FJ12GP201",
+  "url": "https://github.com/Wiz-IO/XC16",
+  "vendor": "Microchip",
+  "frameworks": [ "Baremetal" ],
+
+  "build": {
+    "category"  : "dsPIC33F",
+    "mcu"       : "33FJ12GP201",
+    "f_cpu"     : "16000000L"
+  },
+
+  "debug": { },
+
+  "upload": {
+    "maximum_ram_size"  :  1024,
+    "maximum_size"      : 16896,
+   
+    "protocol"          : "GEN4",
+    "device"            : "dsPIC33FJ12GP201",
+    "info": { 
+        "DeviceID"      : "0x0802FFFF",
+        "FlashEnd"      : "0x2000", 
+        "Config"        : "0xF80000",
+        "ConfigSize"    : 18
+    },
+    "tool": {
+        "power"         : 1,
+        "release_power" : 0,
+        "release_reset" : 1,
+        "speed"         : 100      
+    }
+  }
+}
