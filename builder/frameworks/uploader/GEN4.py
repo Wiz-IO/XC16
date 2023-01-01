@@ -610,8 +610,11 @@ def dev_uploader(target, source, env):
     # d.applySelJTAGSpeed(1)
     # d.setResistors() # by defaut is ok
 
-    res = d.get_device_id()
-    INFO('Device ID : %04X rev %d' % ( res >> 16, res & 0xFFFF ) )
+    res = d.get_device_id() # TODO: check
+    if res == 0:
+        INFO('Device ID : ERROR')
+    else:
+        INFO('Device ID : %04X rev %d' % ( res >> 16, res & 0xFFFF ) )
 
     d.erase_chip()
 
