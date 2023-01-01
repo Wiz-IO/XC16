@@ -237,8 +237,6 @@ class GEN4:
             self.rx = self.USB.read(ep, size + 1, self.timeout)
         except:
             ERROR('HID READ TIMEOUT')
-        if size != len(self.rx):
-            ERROR('HID READ SIZE')
 
     def receive(self, size = 0x200, ep = 0x81):
         self.hid_read(size, ep)
@@ -409,43 +407,47 @@ class GEN4:
         params = struct.pack('<I', codeGuardOption)
         self.write(scr = self.SCR['EraseChip'], prm = params)
 
-    # Write to flash
-    def WriteProgmem(self, address, size):
+    def _pyload(self, script, address, size, type=None):
         params  = struct.pack('<I', address)
         params += struct.pack('<I', size)
         self.write(
-            cmd = SCRIPT_WITH_DOWNLOAD,
-            scr = self.SCR['WriteProgmem'],
+            cmd = SCRIPT_WITH_DOWNLOAD if type==None else SCRIPT_WITH_UPLOAD,
+            scr = self.SCR[script],
             prm = params,
             transferSize = size
         )
+
+    ### WRITE
+    def WriteProgmem(self, address, size):
+        self._pyload('WriteProgmem', address, size)
+
+    def WriteProgmemWords(self, address, size):
+        self._pyload('WriteProgmemWords', address, size)
 
     def WriteDataEEmem(self, address, size):
-        params  = struct.pack('<I', address)
-        params += struct.pack('<I', size)
-        self.write(
-            cmd = SCRIPT_WITH_DOWNLOAD,
-            scr = self.SCR['WriteDataEEmem'],
-            prm = params,
-            transferSize = size
-        )
+        self._pyload('WriteDataEEmem', address, size)
 
     def WriteConfigmem(self, address, size):
-        params  = struct.pack('<I', address)
-        params += struct.pack('<I', size)
-        self.write(
-            cmd = SCRIPT_WITH_DOWNLOAD,
-            scr = self.SCR['WriteConfigmem'],
-            prm = params,
-            transferSize = size
-        )
+        self._pyload('WriteConfigmem', address, size)
 
-    # Write to Executive Code Memory ( PE_ADDRESS ) not used
-    def WriteProgmemPE(self):
-        pass
+    def WriteProgmemPE(self, address, size):
+        self._pyload('WriteProgmemPE', address, size)
 
+    ### READ
     def ReadProgmem(self, address, size):
-        pass
+        self._pyload('ReadProgmem', address, size, 'READ')
+
+    def ReadProgmemWords(self, address, size):
+        self._pyload('ReadProgmemWords', address, size, 'READ')
+
+    def ReadConfigmem(self, address, size):
+        self._pyload('ReadConfigmem', address, size, 'READ')
+
+    def ReadDataEEmem(self, address, size):
+        self._pyload('ReadDataEEmem', address, size, 'READ')
+
+    def ReadProgmemPE(self, address, size):
+        self._pyload('ReadProgmemPE', address, size, 'READ')
 
 ## COMMON #####################################################################
 
