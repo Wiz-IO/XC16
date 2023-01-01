@@ -463,13 +463,19 @@ class GEN4:
         self.applySelPullUpDown(0, 1, 0, 4700)
         self.applySelPullUpDown(1, 1, 1, 4700)
 
-    def get_device_id(self, test_start = True, test_end = True):
-        if test_start:
-            self.EnterTMOD_LV()
+    def get_device_id(self):
+        self.EnterTMOD_LV()
         res = self.GetDeviceID()
-        if test_end:
-            self.ExitTMOD()
+        self.ExitTMOD()
         return res
+
+    def check_device_id(self):
+        id = self.get_device_id()
+        if id == 0:
+            ERROR('Device ID cannot be zero')
+        if id >> 16 != self.device_info['DeviceID'] >> 16:
+            ERROR('Wrong Device ID %04X. Must be %04X' % (id >> 16, self.device_info['DeviceID'] >> 16))
+        return id
 
     def erase_pe(self, test_start = True, test_end = True):
         if test_start:
@@ -553,6 +559,11 @@ def dev_uploader(target, source, env):
 
     device = env.BoardConfig().get('upload.device', None)
     info = env.BoardConfig().get('upload.info', None)
+    if info: 
+        for k in info: # convert to int
+            if type(info[k]) == str:
+                info[k] = int(info[k], 0)
+
     tool = env.BoardConfig().get('upload.tool', None)
     if None == tool:
         ERROR('Upload tool settings')
@@ -610,11 +621,8 @@ def dev_uploader(target, source, env):
     # d.applySelJTAGSpeed(1)
     # d.setResistors() # by defaut is ok
 
-    res = d.get_device_id() # TODO: check
-    if res == 0:
-        INFO('Device ID : ERROR')
-    else:
-        INFO('Device ID : %04X rev %d' % ( res >> 16, res & 0xFFFF ) )
+    res = d.check_device_id() # TODO: check
+    INFO('Device ID : %04X, Revision : %04X' % ( res >> 16, res & 0xFFFF ) )
 
     d.erase_chip()
 
