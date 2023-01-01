@@ -41,10 +41,10 @@ Put DLL in PlatformIO Python folder ( .platformio/penv/Scripts )<br>
 Should work on Linux & Mac too ... no idea, me: Windows<br>
 **ATTENTION** Arduino API is 32 bits, XC16 is 16 bits ( **int** )<br>
 Recommended chips for Arduino & C++ with **32k** RAM<br>
-I have on hand **PIC24FJ256GB206** & PIC24F16KA301<br>
-# PIC24FJ256GB206
-# PIC24F16KA301
-# dsPIC33FJ12GP201
+I have on hand:
+* PIC24FJ256GB206
+* PIC24F16KA301
+* dsPIC33FJ12GP201
 so, the experiments are with this [boards](https://github.com/Wiz-IO/XC16/blob/main/boards)<br>
 
 ## Debugging
