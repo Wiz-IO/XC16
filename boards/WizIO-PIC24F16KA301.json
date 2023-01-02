@@ -19,11 +19,11 @@
     "protocol"          : "GEN4",
     "device"            : "PIC24F16KA301",
     "info": { 
-        "DeviceID"      : 1158217727,
-        "FlashEnd"      : 11264, 
-        "Eeprom"        : 8388096,
+        "DeviceID"      : "0x4508FFFF",
+        "FlashEnd"      : "0x2C00",
+        "Eeprom"        : "0x7FFE00",
         "EepromSize"    : 256,        
-        "Config"        : 16252928,
+        "Config"        : "0xF80000",
         "ConfigSize"    : 18
     },
     "tool": {

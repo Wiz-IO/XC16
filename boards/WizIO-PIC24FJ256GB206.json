@@ -22,9 +22,9 @@
     "protocol"          : "GEN4",
     "device"            : "PIC24FJ256GB206",
     "info": { 
-        "DeviceID"      : 1090846719,
-        "FlashEnd"      : 88064, 
-        "FlashConfigEnd": 175104
+        "DeviceID"      : "0x4104FFFF",
+        "FlashEnd"      : "0x15800",
+        "FlashConfigEnd": "0x2AC00"
     },
     "tool": {
         "power"         : 1,
